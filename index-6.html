@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>حياتي</title>
+<link rel="manifest" href="manifest.json"><link rel="icon" type="image/png" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#8b1a34"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<style>
+:root{color-scheme:dark;--h2:#3a0a16;--soft:#f0c9d2;--soft2:#e0a3b2;--lb:#2a1118;--nav:rgba(10,8,9,.94);--bg:#0a0809;--card:#161113;--card2:#1f1619;--line:#2c2024;--bur:#8b1a34;--bur2:#b3264a;--tx:#f1e9ea;--mu:#9a8a8d;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:"Segoe UI",Tahoma,"Noto Sans Arabic",system-ui,sans-serif;min-height:100%;padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+main{max-width:640px;margin:0 auto;padding:18px 16px}
+.tab{display:none;animation:up .35s ease}.tab.on{display:block}
+@keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+h1{font-size:26px;margin:6px 0 2px}h2{font-size:15px;color:var(--mu);margin:22px 0 8px;font-weight:600}
+.sub{color:var(--mu);font-size:13px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px}
+.hero{background:linear-gradient(145deg,var(--bur),var(--h2) 70%);border:0;text-align:center;padding:22px 14px}
+.hero .big{font-size:40px;font-weight:700;letter-spacing:1px;direction:ltr}
+.row{display:flex;align-items:center;gap:10px;justify-content:space-between}
+.p{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:8px;cursor:pointer}
+.p.next{border-color:var(--bur2);box-shadow:0 0 0 1px var(--bur2) inset}
+.p .t{margin-inline-start:auto;direction:ltr;color:var(--mu)}
+.ck{width:22px;height:22px;border-radius:6px;border:2px solid var(--mu);display:grid;place-items:center;font-size:14px;color:#fff}
+.p.done .ck{background:var(--bur2);border-color:var(--bur2)}.p.done .n{text-decoration:line-through;color:var(--mu)}
+.bar{height:8px;background:var(--card2);border-radius:9px;overflow:hidden;margin:10px 0}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--bur),var(--bur2));border-radius:9px;transition:width .4s}
+button,.btn{background:var(--bur);color:#fff;border:0;border-radius:10px;padding:10px 16px;font:inherit;cursor:pointer}
+button.g{background:var(--card2);border:1px solid var(--line);color:var(--tx)}
+input,textarea{width:100%;background:var(--card2);color:var(--tx);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font:inherit;outline:0}
+input:focus,textarea:focus{border-color:var(--bur2)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center}
+.stat b{display:block;font-size:26px;margin:4px 0}.stat input{text-align:center;font-size:20px;font-weight:700;background:none;border:0;padding:2px}
+.heart{font-size:54px;font-weight:700;direction:ltr}.beat{display:inline-block;animation:b 1s infinite}
+@keyframes b{50%{transform:scale(1.2)}}
+.note{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:10px;white-space:pre-wrap;word-break:break-word}
+.note small{display:block;color:var(--mu);margin-top:6px;font-size:11px}
+.tag{color:var(--bur2);cursor:pointer;font-weight:600}.lnk{color:var(--soft2);background:var(--lb);border-radius:5px;padding:0 4px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.chip{background:var(--card2);border:1px solid var(--line);border-radius:20px;padding:4px 12px;font-size:13px;cursor:pointer}.chip.on{background:var(--bur);border-color:var(--bur);color:#fff}.hero{color:#fff}
+.x{background:none;color:var(--mu);padding:2px 8px}
+nav{position:fixed;inset:auto 0 0 0;display:flex;justify-content:space-around;background:var(--nav);backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:8px 6px calc(8px + env(safe-area-inset-bottom,0px));z-index:5}
+nav button{background:none;color:var(--mu);display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;flex:1;padding:6px 0;border-radius:12px}
+nav button span{font-size:22px;filter:grayscale(1) opacity(.7);transition:.2s}
+nav button.on{color:var(--tx)}nav button.on span{filter:none;transform:translateY(-3px) scale(1.15)}
+nav button.on::after{content:"";width:22px;height:3px;border-radius:3px;background:var(--bur2)}
+.top{display:flex;justify-content:space-between;align-items:center}#menu{display:none;position:absolute;inset-inline-start:16px;top:56px;background:var(--card2);border:1px solid var(--line);border-radius:12px;z-index:9;min-width:180px}#menu div{padding:13px 16px;cursor:pointer}#menu.on{display:block}.ov{position:fixed;inset:0;background:var(--bg);z-index:20;overflow:auto;padding:calc(18px + env(safe-area-inset-top,0px)) 16px 40px;display:none}.ov.on{display:block}.bars{display:flex;gap:6px;align-items:flex-end;height:120px}.bc{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;font-size:11px;color:var(--mu);gap:3px}.bc i{width:100%;background:linear-gradient(var(--bur2),var(--bur));border-radius:5px 5px 0 0;min-height:3px}.x{font-size:13px;color:var(--soft2)!important}.up{color:#6fcf97}.dn{color:#eb5757}
+select{background:var(--card2);color:var(--tx);border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit}
+.msg{font-size:12px;color:var(--mu);margin-top:8px}
+html[data-ac=green]{--bur:#1f7a4a;--bur2:#2fa86a;--h2:#0b2e1c;--soft:#c9f0dc;--soft2:#9fdcbc;--lb:#10281c}
+html[data-th=light]{color-scheme:light;--bg:#f6f1f1;--card:#fff;--card2:#efe7e8;--line:#e2d6d8;--tx:#241a1c;--mu:#7a6a6d;--nav:rgba(255,255,255,.94);--lb:#f3dfe4;--soft2:#8b1a34}
+html[data-th=light][data-ac=green]{--lb:#d9f0e3;--soft2:#1f7a4a}
+.top{position:relative}.fr{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:10px;cursor:pointer}.fr:hover{background:var(--card2)}.fr.on{background:var(--lb);color:var(--soft2)}.fr small{margin-inline-start:auto;color:var(--mu)}.tree{max-height:230px;overflow:auto}
+#menu{display:none;position:absolute;inset-inline-end:0;inset-inline-start:auto;top:50px;width:290px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:8px;z-index:9;box-shadow:0 18px 50px rgba(0,0,0,.45)}
+#menu.on{display:block;animation:pop .18s ease}
+@keyframes pop{from{opacity:0;transform:translateY(-6px) scale(.97)}to{opacity:1;transform:none}}
+#menu .mi{display:flex;align-items:center;gap:12px;padding:9px 10px;border-radius:12px;cursor:pointer;transition:.15s}
+#menu .mi:hover{background:var(--card2)}
+#menu .mi i{width:38px;height:38px;border-radius:11px;background:var(--lb);color:var(--soft2);display:grid;place-items:center;flex:none}
+#menu .mi svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#menu .mi span{display:flex;flex-direction:column;line-height:1.35}
+#menu .mi b{font-size:14px;font-weight:600}#menu .mi small{font-size:11.5px;color:var(--mu)}
+#menu .mi u{margin-inline-start:auto;text-decoration:none;color:var(--mu)}
+[dir=rtl] #menu .mi u{transform:scaleX(-1)}
+#menu hr{border:0;border-top:1px solid var(--line);margin:6px 8px}
+.ovi{max-width:760px;margin:0 auto}
+.cols{display:block}.cols>div{min-width:0}
+#fm{position:fixed;inset:0;background:radial-gradient(circle at 50% 35%,var(--h2),var(--bg) 72%);z-index:30;display:none;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:24px;text-align:center}
+#fm.on{display:flex}#fm .pt{font-size:clamp(72px,24vw,190px);font-weight:700;direction:ltr;letter-spacing:2px;line-height:1}
+#fm .fx{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));inset-inline-end:16px}
+@media(min-width:900px){
+ body{padding-bottom:0;padding-inline-start:230px}
+ nav{inset:0 auto 0 auto;inset-inline-start:0;width:230px;flex-direction:column;justify-content:flex-start;gap:6px;padding:76px 14px 14px;border-top:0;border-inline-end:1px solid var(--line)}
+ nav button{flex:none;flex-direction:row;gap:12px;font-size:15px;padding:12px 14px;justify-content:flex-start}
+ nav button span{font-size:20px;transform:none!important}
+ nav button.on{background:var(--card2)}nav button.on::after{display:none}
+ main{max-width:1080px;padding:26px 40px}
+ .cols{display:grid;grid-template-columns:1fr 1fr;gap:0 28px;align-items:start}
+ .tree{max-height:none}
+ .ng{display:grid;grid-template-columns:1fr 1fr;gap:0 14px;align-items:start}
+ .ac3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.grid.g3{grid-template-columns:repeat(3,1fr)}
+ .ovi{max-width:980px}
+}
+:root{--lt:#e58aa3}html[data-ac=green]{--lt:#7fd9a8}
+#fm{background:var(--h2);background:radial-gradient(ellipse at 50% 38%,color-mix(in srgb,var(--bur) 70%,var(--h2)) 0%,var(--h2) 72%);color:#fff}
+#fm .sub{color:rgba(255,255,255,.85)}
+#fm button{background:#fff;color:var(--h2);font-weight:600}
+#fm button.g{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.35)}
+#orb{position:absolute;inset:0;width:100%;height:100%;opacity:.6;pointer-events:none}
+#fmc{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:18px;width:100%}
+#fm .fx{z-index:2}
+#fm .ringw{width:min(300px,78vw)}#fm .pt{font-size:clamp(50px,15vw,80px)}
+#dlg{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:50;display:none;align-items:center;justify-content:center;padding:20px}#dlg.on{display:flex}
+.dbox{background:var(--card);color:var(--tx);border:1px solid var(--line);border-radius:16px;padding:18px;width:100%;max-width:360px}
+
+/* 3D + polish */
+button{box-shadow:0 4px 0 rgba(0,0,0,.35),0 8px 14px rgba(0,0,0,.22);transition:transform .12s,box-shadow .12s}
+button:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.35)}
+.x,.nb,.sel,.fab{box-shadow:none}.x:active,.nb:active,.sel:active{transform:none}
+.fab{box-shadow:0 8px 24px rgba(0,0,0,.45)}
+.card,.note,.fc,.stat,.p{box-shadow:0 6px 18px rgba(0,0,0,.22);transition:transform .18s ease,box-shadow .18s,border-color .18s;transform-style:preserve-3d}
+html[data-th=light] .card,html[data-th=light] .note,html[data-th=light] .fc,html[data-th=light] .stat,html[data-th=light] .p{box-shadow:0 6px 18px rgba(80,40,50,.12)}
+@keyframes up{from{opacity:0;transform:perspective(900px) rotateX(14deg) translateY(22px) scale(.97)}to{opacity:1;transform:none}}
+html[data-fx=off] .tab{animation:none}html[data-fx=off] button{box-shadow:none}
+.ringw{position:relative;width:min(230px,66vw);aspect-ratio:1;margin:6px auto;display:grid;place-items:center}
+.ring{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg);filter:drop-shadow(0 6px 10px rgba(0,0,0,.45))}
+.rt{fill:none;stroke:rgba(255,255,255,.16);stroke-width:12}.rg{fill:none;stroke:#fff;stroke-width:12;stroke-linecap:round;stroke-dasharray:603;transition:stroke-dashoffset .9s linear}
+.pt{perspective:600px;text-shadow:0 1px 0 rgba(255,255,255,.35),0 3px 0 rgba(0,0,0,.2),0 8px 14px rgba(0,0,0,.4)}
+.pt span{display:inline-block}.flip{animation:flip .45s ease}
+@keyframes flip{from{transform:rotateX(90deg);opacity:0}to{transform:rotateX(0);opacity:1}}
+.sel{display:flex;align-items:center;justify-content:space-between;width:100%;background:var(--card2);color:var(--tx);border:1px solid var(--line);border-radius:12px;padding:12px 14px;text-align:start;font:inherit}
+.sel::after{content:"▾";color:var(--mu);margin-inline-start:10px}
+.hero .sel,#fm .sel{background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.35);max-width:320px;margin:0 auto}
+#dlg2{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:60;display:none;align-items:center;justify-content:center;padding:20px}#dlg2.on{display:flex}
+.dbox{max-height:90vh;overflow:auto}.sheet{max-width:440px}
+#dlg.on .dbox,#dlg2.on .dbox{animation:sheet .22s ease}@keyframes sheet{from{transform:translateY(40px);opacity:0}}
+.opts{max-height:60vh;overflow:auto}
+.opt{display:flex;align-items:center;gap:12px;padding:14px;border-radius:12px;cursor:pointer}.opt:hover{background:var(--card2)}
+.opt .rd{width:22px;height:22px;border-radius:50%;border:2px solid var(--mu);flex:none}
+.opt.on{background:var(--lb)}.opt.on .rd{border-color:var(--bur2);background:radial-gradient(var(--bur2) 45%,transparent 50%)}
+@media(max-width:899px){#dlg,#dlg2{align-items:flex-end;padding:0}.dbox{max-width:none;border-radius:22px 22px 0 0;padding-bottom:calc(18px + env(safe-area-inset-bottom,0px))}}
+.srch{border-radius:14px;padding:13px 16px;margin:14px 0 10px}
+.crumbs{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:8px 0 12px}.crumbs i{font-style:normal;color:var(--mu)}[dir=rtl] .crumbs i{transform:scaleX(-1)}
+.cr{padding:6px 12px;border-radius:20px;background:var(--card2);border:1px solid var(--line);cursor:pointer;font-size:14px}.cr.on{background:var(--bur);border-color:var(--bur);color:#fff}
+.tb{display:flex;gap:8px;margin-bottom:14px}.tb button{flex:1}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.fc{position:relative;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;cursor:pointer;display:flex;flex-direction:column;gap:2px}
+.fc:hover{border-color:var(--bur2)}.fc .fi{font-size:28px}.fc .fn{font-weight:600;word-break:break-word}.fc small{color:var(--mu)}
+.fc .fa{position:absolute;top:6px;inset-inline-end:6px;display:flex}.fc .fa button{padding:6px 8px;font-size:15px}
+.note{cursor:pointer}.note .nt{display:block;font-size:16px;margin-bottom:6px}
+.note .pv{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.note .na{display:flex;gap:8px;margin-top:10px}.note .na button{padding:8px 14px;font-size:14px}
+.empty{text-align:center;color:var(--mu);padding:36px 10px}.empty div{font-size:42px;margin-bottom:6px}
+.fab{position:fixed;inset-inline-end:20px;bottom:calc(92px + env(safe-area-inset-bottom,0px));width:58px;height:58px;border-radius:50%;font-size:28px;display:none;place-items:center;z-index:6;padding:0}
+@media(min-width:900px){.fab{bottom:30px}.fg{grid-template-columns:repeat(4,1fr)}}
+/* folders horizontal + growth redesign */
+.fg{grid-template-columns:1fr;gap:8px}
+.fc{flex-direction:row;align-items:center;gap:12px;padding:10px 14px}
+.fc .fi{font-size:24px}.fc .fn{flex:1;min-width:0}.fc small{font-size:13px}
+.fc .fa{position:static;margin-inline-start:4px}
+@media(min-width:900px){.fg{grid-template-columns:repeat(2,1fr)}.stk{position:sticky;top:20px}}
+.mini{display:flex;gap:10px;margin:14px 0}.mini>div{flex:1;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 6px;text-align:center}.mini b{display:block;font-size:20px}.mini span{font-size:11px;color:var(--mu)}
+.hero.pomo{padding:16px 14px}
+.seg{display:flex;background:rgba(0,0,0,.25);border-radius:20px;padding:3px;margin:0 auto 6px;width:max-content}.seg span{cursor:pointer;padding:5px 16px;border-radius:17px;font-size:13px;color:rgba(255,255,255,.7)}.seg .on{background:rgba(255,255,255,.95);color:var(--h2);font-weight:600}
+.pbtn{display:flex;gap:8px}.pbtn button{flex:1;padding:12px 6px}.pbtn .big{flex:1.6;font-size:17px}
+.hero.pomo button{background:#fff;color:var(--h2);font-weight:700}.hero.pomo button.g{background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.35)}
+.dur{display:flex;gap:12px;justify-content:center;margin-top:14px}.dur label{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;color:rgba(255,255,255,.85)}
+.dur input{width:76px;text-align:center;background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.3)}
+.addr{display:flex;gap:8px;margin:0 0 10px}.addr input{flex:1;border-radius:14px;padding:13px 16px}.addr button{width:52px;padding:0;font-size:22px}
+.goal{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px;box-shadow:0 6px 18px rgba(0,0,0,.22);transition:transform .18s ease,opacity .2s}
+html[data-th=light] .goal{box-shadow:0 6px 18px rgba(80,40,50,.12)}
+.goal.fin{opacity:.72}.goal.fin .gi b{text-decoration:line-through}
+.gh{display:flex;align-items:center;gap:12px}.gh .x{padding:8px 10px;font-size:16px}
+.gr{position:relative;width:48px;height:48px;flex:none}.gr svg{width:100%;height:100%;transform:rotate(-90deg)}
+.rb{fill:none;stroke:var(--card2);stroke-width:5}.rv{fill:none;stroke:var(--bur2);stroke-width:5;stroke-linecap:round;stroke-dasharray:113.1;transition:stroke-dashoffset .3s}
+.gr .gp{position:absolute;inset:0;display:grid;place-items:center;font-size:11px;font-weight:700}
+.gi{flex:1;min-width:0;display:flex;flex-direction:column}.gi b{word-break:break-word}.gi small{color:var(--mu)}
+.goal input[type=range]{margin:12px 0 4px;padding:0;accent-color:var(--bur2)}
+.ga{display:flex;gap:8px;margin-top:8px}.ga button{flex:1;padding:10px 8px;font-size:14px}
+/* accents + calendar + adhan banner */
+html[data-ac=blue]{--bur:#1f5fbf;--bur2:#3b82f6;--h2:#0b2347;--soft:#cfe1fb;--soft2:#9bc0f7;--lb:#101f38;--lt:#8ab8ff}
+html[data-ac=yellow]{--bur:#a16207;--bur2:#eab308;--h2:#2e2204;--soft:#fdf0b8;--soft2:#f5d76e;--lb:#2b2305;--lt:#ffe680}
+html[data-ac=red]{--bur:#b91c1c;--bur2:#ef4444;--h2:#450a0a;--soft:#fecaca;--soft2:#fca5a5;--lb:#2b0d0d;--lt:#fca5a5}
+html[data-th=light][data-ac=blue]{--lb:#dce9fb;--soft2:#1f5fbf}
+html[data-th=light][data-ac=yellow]{--lb:#fbf0c8;--soft2:#a16207}
+html[data-th=light][data-ac=red]{--lb:#fde2e2;--soft2:#b91c1c}
+#menu{max-height:calc(100vh - 130px);overflow:auto}
+#adh{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));inset-inline:12px;margin:0 auto;max-width:420px;background:var(--bur);color:#fff;border-radius:16px;padding:12px 14px;z-index:40;display:none;align-items:center;justify-content:space-between;gap:10px;box-shadow:0 12px 30px rgba(0,0,0,.5)}#adh.on{display:flex}
+#adh button{background:#fff;color:var(--h2);padding:8px 14px}
+.cal{margin-top:6px}.cw,.cg{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}.cw span{text-align:center;font-size:11px;color:var(--mu);padding:4px 0}
+.cd{aspect-ratio:1;background:var(--card);border:1px solid var(--line);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative;font-size:14px;line-height:1.1}
+.cd small{font-size:9px;color:var(--mu)}.cd.today{border-color:var(--bur2)}.cd.sel{background:var(--bur);border-color:var(--bur);color:#fff}.cd.sel small{color:rgba(255,255,255,.75)}
+.dots{position:absolute;bottom:3px;display:flex;gap:2px}.dots i{width:5px;height:5px;border-radius:50%;display:block}.dots .g{background:#4ade80}.dots .h{background:#a3a3a3}.dots .b{background:#60a5fa}.dots .r{background:#f87171}.dots .y{background:#facc15}
+[dir=rtl] .cnav{transform:scaleX(-1)}
+
+/* حياتي — refreshed visual layer */
+:root{--radius:20px}
+body{background:radial-gradient(ellipse at 90% -10%,color-mix(in srgb,var(--bur) 18%,transparent),transparent 42%),var(--bg)}
+main{padding-top:calc(18px + env(safe-area-inset-top,0px))}
+.top{padding:10px 2px 16px;margin-bottom:8px;gap:12px}
+.brand{display:flex;align-items:center;gap:11px;min-width:0}
+.brand-mark{width:46px;height:46px;border-radius:16px;background:linear-gradient(145deg,var(--bur2),var(--h2));border:1px solid color-mix(in srgb,var(--soft2) 50%,transparent);display:grid;place-items:center;box-shadow:0 8px 28px color-mix(in srgb,var(--bur) 28%,transparent);flex:none}
+.brand-mark svg{width:31px;height:31px;fill:#fff}
+.brand-copy{display:flex;flex-direction:column;gap:2px}.brand-copy b{font-size:21px;letter-spacing:-.5px}.brand-copy small{font-size:11px;color:var(--mu)}
+.top-actions{display:flex;gap:7px;align-items:center}.top-actions button{width:40px;height:40px;padding:0;border-radius:14px;font-size:18px}
+.card,.stat,.note,.p{border-radius:18px;transition:border-color .2s,background .2s,transform .2s}
+.card{box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.hero{border-radius:24px;background:radial-gradient(circle at 10% 0%,color-mix(in srgb,var(--bur2) 70%,transparent),transparent 50%),linear-gradient(135deg,var(--h2),var(--bur));text-align:start;padding:22px;position:relative;overflow:hidden}
+.hero:after{content:'☾';position:absolute;left:18px;bottom:-38px;font-size:140px;line-height:1;color:rgba(255,255,255,.055);pointer-events:none}
+.hero .big{font-size:36px}
+button{transition:transform .15s,filter .15s}button:active{transform:scale(.97)}
+input,textarea,select{border-radius:13px}
+nav{padding-top:10px}
+nav button.on::after{height:3px}
+@media(min-width:900px){.top{padding-bottom:24px}.brand-mark{width:52px;height:52px}}
+
+#menu{top:68px}
+.brand-mark{background:none!important;border:0!important;box-shadow:none!important;padding:0;overflow:hidden;border-radius:14px}.brand-mark img{width:100%;height:100%;display:block}
+#toast{position:fixed;bottom:calc(100px + env(safe-area-inset-bottom,0px));inset-inline:16px;margin:0 auto;max-width:380px;background:var(--card);color:var(--tx);border:1px solid var(--bur2);border-radius:14px;padding:12px 16px;z-index:70;display:none;box-shadow:0 12px 30px rgba(0,0,0,.45);text-align:center}#toast.on{display:block}
+</style>
+</head>
+<body>
+<main>
+<div class="top"><div class="brand"><div class="brand-mark"><img alt="" src="data:image/png;base64,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"></div><div class="brand-copy"><b>حياتي</b><small>خطوة صغيرة كل يوم</small></div></div><div class="top-actions"><button class="g" id="mn" title="القائمة">⋮</button></div><div id="menu"><div class="mi" data-m="gs"><i><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg></i><span><b>بحث شامل</b><small>ابحث في كل حاجة</small></span><u>›</u></div><div class="mi" data-m="an"><i><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></i><span><b>تحليل الإنجازات</b><small>تقدمك وإنجازاتك</small></span><u>›</u></div><div class="mi" data-m="cal"><i><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></i><span><b>التقويم</b><small>مواعيدك وإنجازات كل يوم</small></span><u>›</u></div><div class="mi" data-m="wk"><i><svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 4 8-9"/><path d="M14 7h6v6"/></svg></i><span><b>مراجعة الأسبوع</b><small>ملخص وأسئلة الأسبوع</small></span><u>›</u></div><div class="mi" data-m="fm"><i><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg></i><span><b>وضع التركيز</b><small>بومودورو بشاشة كاملة</small></span><u>›</u></div><hr><div class="mi" data-m="sn"><i><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10 21a2 2 0 0 0 4 0"/></svg></i><span><b>النغمات</b><small>نغمات الإنجاز والراحة</small></span><u>›</u></div><div class="mi" data-m="th"><i><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="8" cy="10" r="1"/><circle cx="12" cy="7" r="1"/><circle cx="16" cy="10" r="1"/><path d="M12 21c-2 0-2-2 0-3s1-3 3-3h3"/></svg></i><span><b>المظهر</b><small>الوضع واللون</small></span><u>›</u></div><div class="mi" data-m="lg"><i><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></i><span><b>English</b><small>تغيير اللغة</small></span><u>›</u></div><hr><div class="mi" data-m="bk"><i><svg viewBox="0 0 24 24"><path d="M12 15V3M7 8l5-5 5 5M4 21h16"/></svg></i><span><b>نسخة احتياطية</b><small>حمّل بياناتك كملف</small></span><u>›</u></div><div class="mi" data-m="im"><i><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></i><span><b>استرجاع نسخة</b><small>من ملف احتياطي</small></span><u>›</u></div><div class="mi" data-m="in"><i><svg viewBox="0 0 24 24"><path d="M12 3v12M7 11l5 5 5-5M4 21h16"/></svg></i><span><b>تثبيت التطبيق</b><small>على الموبايل أو الكمبيوتر</small></span><u>›</u></div><div class="mi" data-m="ac"><i><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></i><span><b>الحساب</b><small>تسجيل الدخول والمزامنة</small></span><u>›</u></div></div></div>
+<section class="tab on" id="t0"></section>
+<section class="tab" id="t1"></section>
+<section class="tab" id="t2"></section>
+<section class="tab" id="t3"></section>
+</main>
+<div id="fm"><canvas id="orb"></canvas><button class="g fx" id="fx">✕ خروج</button><div id="fmc"></div></div><div id="dlg"></div><div id="dlg2"></div><div id="adh"></div><div id="toast"></div><input type="file" id="adf" accept="audio/*" hidden><button class="fab" id="fab">＋</button>
+<div class="ov" id="ov"></div><input type="file" id="importFile" accept="application/json,.json" hidden>
+<nav id="nav"></nav>
+<script>
+const $=s=>document.querySelector(s);
+let S={folders:[],pomo:[],pray:{},wird:{goal:5,days:{}},health:{},goals:[],notes:[]};
+try{const r=localStorage.getItem('life1');if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+let ref=null,tm,acct='',lastPush='';const stab=o=>JSON.stringify(o,(k,v)=>v&&typeof v=='object'&&!Array.isArray(v)?Object.fromEntries(Object.entries(v).sort(([a],[b])=>a<b?-1:1)):v);
+const save=()=>{try{localStorage.setItem('life1',JSON.stringify(S))}catch(e){}push()};
+function push(){if(!ref)return;clearTimeout(tm);tm=setTimeout(()=>{try{lastPush=stab(S);ref.set(JSON.parse(JSON.stringify(S))).catch(()=>{})}catch(e){}},800)}
+const day=()=>new Date().toLocaleDateString('en-CA');
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const tabs=[['🕌','الدين'],['❤️','الصحة'],['🌱','تطوير ذات'],['💭','فكرة']];
+$('#nav').innerHTML=tabs.map((t,i)=>`<button class="nb" data-i="${i}"><span>${t[0]}</span>${t[1]}</button>`).join('');
+function go(i){document.querySelectorAll('.tab').forEach((e,k)=>e.classList.toggle('on',k==i));document.querySelectorAll('nav button').forEach((e,k)=>e.classList.toggle('on',k==i));scrollTo(0,0);$('#fab').style.display=i==3?'grid':'none';try{localStorage.setItem('lifetab',i)}catch(e){}}
+$('#nav').onclick=e=>{const b=e.target.closest('button');if(b)go(+b.dataset.i)};
+
+/* ---------- prayer times (Egyptian General Authority method) ---------- */
+let LAT=30.04,LON=31.24,locFail=false;if(S.loc){LAT=S.loc[0];LON=S.loc[1]}
+function locate(){if(!navigator.geolocation){locFail=true;return renderDeen()}navigator.geolocation.getCurrentPosition(p=>{S.loc=[+p.coords.latitude.toFixed(4),+p.coords.longitude.toFixed(4)];LAT=S.loc[0];LON=S.loc[1];locFail=false;save();renderDeen()},()=>{locFail=true;renderDeen()},{timeout:12000,maximumAge:3e5})}
+const rad=Math.PI/180,sin=x=>Math.sin(x*rad),cos=x=>Math.cos(x*rad),tan=x=>Math.tan(x*rad);
+function times(d){
+  const tz=-d.getTimezoneOffset()/60;
+  const jd=Date.UTC(d.getFullYear(),d.getMonth(),d.getDate(),12)/864e5+2440587.5-2451545;
+  const g=(357.529+.98560028*jd)%360,q=(280.459+.98564736*jd)%360;
+  const L=q+1.915*sin(g)+.02*sin(2*g),e=23.439-4e-7*jd;
+  let ra=Math.atan2(cos(e)*sin(L),cos(L))/rad/15;ra=((ra%24)+24)%24;
+  let eq=q/15-ra;eq=((eq+12)%24+24)%24-12;
+  const dec=Math.asin(sin(e)*sin(L))/rad;
+  const dh=12+tz-LON/15-eq;
+  const T=a=>Math.acos((-sin(a)-sin(dec)*sin(LAT))/(cos(dec)*cos(LAT)))/rad/15;
+  const A=Math.atan(1/(1+tan(Math.abs(LAT-dec))))/rad*0+(90-Math.atan(1+tan(Math.abs(LAT-dec)))/rad);
+  const asr=dh+Math.acos((sin(A)-sin(dec)*sin(LAT))/(cos(dec)*cos(LAT)))/rad/15;
+  return [['الفجر',dh-T(19.5)],['الظهر',dh+.03],['العصر',asr],['المغرب',dh+T(.833)+.05],['العشاء',dh+T(17.5)]];
+}
+const fmt=h=>{let m=Math.round(((h%24)+24)%24*60),hh=Math.floor(m/60),mm=m%60,ap=S.lang=='en'?(hh>=12?'PM':'AM'):(hh>=12?'م':'ص');hh=hh%12||12;return hh+':'+String(mm).padStart(2,'0')+' '+ap};
+function nextP(){const n=new Date(),h=n.getHours()+n.getMinutes()/60+n.getSeconds()/3600,t=times(n);
+  for(let i=0;i<5;i++)if(t[i][1]>h)return{i,left:t[i][1]-h};
+  return{i:0,left:t[0][1]+24-h}}
+const hms=h=>{const s=Math.max(0,Math.round(h*3600));return [Math.floor(s/3600),Math.floor(s%3600/60),s%60].map(v=>String(v).padStart(2,'0')).join(':')};
+
+function renderDeen(){
+  const t=times(new Date()),nx=nextP(),k=day(),pd=S.pray[k]||{};
+  const hij=new Intl.DateTimeFormat((S.lang=='en'?'en-US':'ar-EG')+'-u-ca-islamic',{day:'numeric',month:'long',year:'numeric'}).format(new Date());
+  const done=t.filter((_,i)=>pd[i]).length,w=S.wird.days[k]||0,g=S.wird.goal;
+  $('#t0').innerHTML=`<h1>الدين 🕌</h1><div class="sub">${hij}</div>
+  <div class="cols"><div><div class="card hero" style="margin-top:14px"><div class="sub" style="color:var(--soft)">الصلاة الجاية: ${t[nx.i][0]}</div><div class="big" id="cd">${hms(nx.left)}</div><div class="sub" style="color:var(--soft)">${fmt(t[nx.i][1])}</div></div>
+  <h2>صلواتي النهاردة — ${done}/5</h2>
+  ${t.map((p,i)=>`<div class="p ${pd[i]?'done':''} ${i==nx.i?'next':''}" data-p="${i}"><div class="ck">${pd[i]?'✓':''}</div><span class="n">${p[0]}</span><span class="t">${fmt(p[1])}</span></div>`).join('')}
+  </div><div><h2>وردي القرآني</h2>
+  <div class="card"><div class="row"><b>${w} / ${g} صفحة</b><span class="sub">الهدف اليومي</span></div>
+  <div class="bar"><i style="width:${Math.min(100,w/g*100)}%"></i></div>
+  <div class="row"><div style="display:flex;gap:8px"><button class="g" data-w="-1">−</button><button data-w="1">+ صفحة</button></div><div style="display:flex;gap:6px;align-items:center"><span class="sub">الهدف</span><input id="goal" type="number" min="1" value="${g}" style="width:64px;text-align:center"></div></div>
+  <div class="chips" style="margin-top:12px">${[6,5,4,3,2,1,0].map(o=>{const d=new Date();d.setDate(d.getDate()-o);const v=S.wird.days[d.toLocaleDateString('en-CA')]||0;return `<span class="chip ${v>=g?'on':''}">${v}</span>`}).join('')}</div><div class="sub">آخر ٧ أيام</div></div>
+  <button class="g" id="loc" style="width:100%;margin-top:14px">📍 حدّد موقعي</button><div class="msg">${S.loc?`المواعيد محسوبة لموقعك الحالي (${S.loc[0]}, ${S.loc[1]}).`:locFail?"ما قدرتش أعرف موقعك — اسمح بالوصول للموقع واضغط الزرار. دلوقتي بستخدم القاهرة مؤقتاً.":"بحدد موقعك…"} طريقة الحساب: الهيئة المصرية العامة للمساحة.</div></div></div>`;
+}
+$('#t0').onclick=e=>{
+  if(e.target.id=='loc')locate();
+  const p=e.target.closest('[data-p]');if(p){const k=day();S.pray[k]=S.pray[k]||{};S.pray[k][p.dataset.p]=!S.pray[k][p.dataset.p];if(S.pray[k][p.dataset.p])snd(Object.values(S.pray[k]).filter(Boolean).length==5?'big':'ok');save();renderDeen()}
+  const w=e.target.closest('[data-w]');if(w){const k=day();S.wird.days[k]=Math.max(0,(S.wird.days[k]||0)+ +w.dataset.w);if(+w.dataset.w>0)snd(S.wird.days[k]==S.wird.goal?'big':'ok');save();renderDeen()}};
+$('#t0').onchange=e=>{if(e.target.id=='goal'){S.wird.goal=Math.max(1,+e.target.value||1);save();renderDeen()}};
+setInterval(()=>{const c=$('#cd');if(c){const n=nextP();c.textContent=hms(n.left);if(n.left<1/3600*1.5)renderDeen()}},1000);
+
+/* ---------- health ---------- */
+let bpm=null,bleMsg='';
+function renderHealth(){
+  const H=S.health,k=day(),v=H[k]||{};
+  $('#t1').innerHTML=`<h1>الصحة ❤️</h1><div class="sub">متابعة من ساعة Oraimo</div>
+  <div class="cols"><div><div class="card hero" style="margin-top:14px"><div class="heart"><span class="beat">❤</span> ${bpm??'--'}</div><div class="sub" style="color:var(--soft)">نبضة / دقيقة</div></div>
+  <button id="ble" style="width:100%">🔗 اربط الساعة (Bluetooth)</button><div class="msg">${bleMsg||'فعّل Bluetooth في الساعة وخليها قريبة. الاتصال المباشر بيشتغل لو الساعة بتبث النبض بشكل معياري.'}</div>
+  </div><div><h2>أرقام النهاردة (تقدر تدخلها من تطبيق Oraimo)</h2>
+  <div class="grid">${[['steps','👟','خطوات'],['sleep','😴','ساعات نوم'],['spo2','🫁','أكسجين %'],['water','💧','أكواب مية']].map(s=>`<div class="stat">${s[1]}<input data-h="${s[0]}" type="number" inputmode="decimal" placeholder="0" value="${v[s[0]]??''}"><span class="sub">${s[2]}</span></div>`).join('')}</div></div></div>`;
+}
+$('#t1').onchange=e=>{const h=e.target.dataset.h;if(h){const k=day();S.health[k]=S.health[k]||{};S.health[k][h]=e.target.value;save()}};
+$('#t1').onclick=async e=>{if(e.target.id!='ble')return;
+  try{if(!navigator.bluetooth)throw 0;
+    const d=await navigator.bluetooth.requestDevice({filters:[{services:['heart_rate']}]});
+    const s=await d.gatt.connect(),sv=await s.getPrimaryService('heart_rate'),c=await sv.getCharacteristic('heart_rate_measurement');
+    await c.startNotifications();c.addEventListener('characteristicvaluechanged',ev=>{const dv=ev.target.value;bpm=dv.getUint8(0)&1?dv.getUint16(1,true):dv.getUint8(1);const el=$('.heart');if(el)el.innerHTML=`<span class="beat">❤</span> ${bpm}`});
+    bleMsg='✅ متصل بـ '+(d.name||'الساعة');renderHealth();
+  }catch(err){bleMsg='ما قدرتش أتصل. جرّب Chrome على أندرويد، وافتح الصفحة في المتصفح مباشرة. لو الساعة مش بتبث النبض، أدخل الأرقام يدوي.';renderHealth()}};
+
+/* ---------- growth ---------- */
+let gf='all';
+function renderGrowth(){
+  S.goals.forEach((g,i)=>{if(!g.i)g.i=Date.now()+i});
+  const tdy=S.pomo.filter(p=>new Date(p.d).toLocaleDateString('en-CA')==day()),mins=tdy.reduce((a,p)=>a+p.m,0),dn=S.goals.filter(g=>g.p>=100).length,
+  list=S.goals.filter(g=>gf=='all'||(gf=='done'?g.p>=100:g.p<100)).sort((a,b)=>(a.p>=100)-(b.p>=100));
+  $('#t2').innerHTML=`<h1>تطوير ذات 🌱</h1><div class="sub">كورسات ومهارات بشتغل عليها</div>
+  <div class="mini"><div><b>${tdy.length}</b><span>جلسات النهاردة</span></div><div><b>${mins}</b><span>دقيقة تركيز</span></div><div><b>${dn}/${S.goals.length}</b><span>مهام مكتملة</span></div></div>
+  <div class="cols"><div class="stk">${pomoCard()}</div><div>
+  <div class="addr"><input id="gn" placeholder="كورس أو مهارة جديدة…"><button id="ga">＋</button></div>
+  <div class="chips">${[['all','الكل'],['act','قيد التنفيذ'],['done','مكتمل']].map(([k,l])=>`<span class="chip ${gf==k?'on':''}" data-gf="${k}">${l}</span>`).join('')}</div>
+  ${list.length?list.map(g=>`<div class="goal ${g.p>=100?'fin':''}"><div class="gh"><div class="gr"><svg viewBox="0 0 44 44"><circle class="rb" cx="22" cy="22" r="18"/><circle class="rv" cx="22" cy="22" r="18" style="stroke-dashoffset:${113.1*(1-g.p/100)}"/></svg><span class="gp">${g.p}%</span></div><div class="gi"><b data-u>${esc(g.n)}</b><small>🍅 ${focusMin(g.i)} دقيقة تركيز</small></div><button class="x" data-ge="${g.i}">✏️</button><button class="x" data-d="${g.i}">🗑️</button></div><input type="range" min="0" max="100" step="5" value="${g.p}" data-r="${g.i}"><div class="ga"><button data-pg="${g.i}">🍅 ركّز عليه</button><button class="g" data-gd="${g.i}">${g.p>=100?'↩ رجّعه':'✓ خلصت'}</button></div></div>`).join(''):'<div class="empty"><div>🌱</div>لسه فاضي — ضيف أول كورس أو مهارة.</div>'}
+  </div></div>`;
+}
+$('#t2').onclick=async e=>{const t=e.target,c=s=>t.closest(s);
+  if(t.id=='ga'){const v=$('#gn').value.trim();if(v){S.goals.unshift({n:v,p:0,i:Date.now()});snd('ok');save();renderGrowth()}return}
+  const f=c('[data-gf]');if(f){gf=f.dataset.gf;return renderGrowth()}
+  const ge=c('[data-ge]');if(ge){const g=S.goals.find(x=>x.i==ge.dataset.ge),nm=await ask('اسم المهمة؟',g.n);if(g&&nm&&nm.trim()){g.n=nm.trim();save();renderGrowth()}return}
+  const gd=c('[data-gd]');if(gd){const g=S.goals.find(x=>x.i==gd.dataset.gd);g.p=g.p>=100?80:100;if(g.p>=100)snd('big');save();return renderGrowth()}
+  const d=c('[data-d]');if(d){if(await sure('تحذف المهمة دي؟')){S.goals=S.goals.filter(x=>x.i!=d.dataset.d);if(S.pt==d.dataset.d)S.pt=0;save();renderGrowth()}}};
+$('#t2').oninput=e=>{const r=e.target.dataset.r;if(r===undefined)return;const g=S.goals.find(x=>x.i==r),o=g.p;g.p=+e.target.value;if(o<100&&g.p>=100)snd('big');save();const c=e.target.closest('.goal');c.querySelector('.gp').textContent=g.p+'%';c.querySelector('.rv').style.strokeDashoffset=113.1*(1-g.p/100);c.classList.toggle('fin',g.p>=100)};
+$('#t2').addEventListener('change',e=>{if(e.target.dataset.r!==undefined)renderGrowth()});
+
+/* ---------- ideas ---------- */
+let tagF=null,ed=null;
+const rich=s=>esc(s).replace(/#([^\s#\[\]]+)/g,'<span class="tag" data-g="$1">#$1</span>').replace(/\[\[([^\]]+)\]\]/g,'<span class="lnk" data-l="$1" style="cursor:pointer">$1</span>');
+function dlg(msg,def,inp){return new Promise(r=>{const d=$('#dlg');d.onclick=null;d.innerHTML=`<div class="dbox"><div>${msg}</div>${inp?`<input id="dv" value="${esc(def||'')}" style="margin-top:12px">`:''}<div style="display:flex;gap:8px;margin-top:16px;justify-content:flex-end"><button class="g" id="dn">إلغاء</button><button id="dy">موافق</button></div></div>`;d.classList.add('on');
+ const v=$('#dv');if(v){v.focus();v.select()}const end=x=>{d.classList.remove('on');d.innerHTML='';r(x)};
+ $('#dy').onclick=()=>end(inp?$('#dv').value:true);$('#dn').onclick=()=>end(inp?null:false);
+ if(v)v.onkeydown=e=>{if(e.key=='Enter')$('#dy').click();if(e.key=='Escape')$('#dn').click()}})}
+const ask=(m,d)=>dlg(m,d,1),sure=m=>dlg(m,0,0);
+function choose(title,items,cur){return new Promise(r=>{const d=$('#dlg2');d.innerHTML=`<div class="dbox sheet"><div class="row" style="margin-bottom:8px"><b>${title}</b><button class="x" id="cx">✕</button></div><div class="opts">${items.map((o,i)=>`<div class="opt ${o.v==cur?'on':''}" data-i="${i}"><span class="rd"></span><span ${o.u?'data-u':''}>${o.u?esc(o.l):o.l}</span></div>`).join('')}</div></div>`;d.classList.add('on');
+ const end=x=>{d.classList.remove('on');d.innerHTML='';d.onclick=null;r(x)};
+ d.onclick=e=>{const o=e.target.closest('.opt');if(o)return end(items[+o.dataset.i].v);if(e.target===d||e.target.closest('#cx'))end()}})}
+let q='';
+const fpath=i=>{const p=[];let f=S.folders.find(x=>x.i==i);while(f){p.unshift(f.n);f=S.folders.find(x=>x.i==f.p)}return p.join(' / ')};
+const cnt=i=>S.notes.filter(n=>(n.f||0)==i).length;
+function editor(n,title){return new Promise(r=>{const d=$('#dlg');d.onclick=null;let f=n?(n.f||0):(S.cf||0);
+ const fl=()=>f?`<span data-u>${esc(fpath(f))}</span>`:'الرئيسي';
+ d.innerHTML=`<div class="dbox sheet"><div class="row" style="margin-bottom:12px"><b>${n?'تعديل الملف':'ملف جديد'}</b><button class="x" id="dn">✕</button></div><input id="eh" value="${esc(n?n.h||'':title||'')}" placeholder="عنوان الملف (اختياري)" style="margin-bottom:10px"><textarea id="et" rows="8" placeholder="إيه اللي في بالك؟">${esc(n?n.t:'')}</textarea><button class="sel" id="ef" style="margin-top:10px">📁 ${fl()}</button><div style="display:flex;gap:8px;margin-top:14px;justify-content:flex-end"><button class="g" id="ec">إلغاء</button><button id="es">حفظ</button></div></div>`;d.classList.add('on');
+ const end=x=>{d.classList.remove('on');d.innerHTML='';r(x)};
+ $('#ef').onclick=async()=>{const v=await choose('اختار المجلد',[{v:0,l:'الرئيسي'},...S.folders.map(x=>({v:x.i,l:fpath(x.i),u:1}))],f);if(v!==undefined){f=v;$('#ef').innerHTML='📁 '+fl()}};
+ $('#dn').onclick=$('#ec').onclick=()=>end(null);$('#es').onclick=()=>end({h:$('#eh').value.trim(),t:$('#et').value.trim(),f});
+ setTimeout(()=>(n&&n.t?$('#et'):$('#eh')).focus(),60)})}
+async function openNote(id,title){const n=id?S.notes.find(x=>x.d==id):null,r=await editor(n,title);if(!r||(!r.t&&!r.h))return;if(n){Object.assign(n,r);n.e=Date.now()}else S.notes.unshift({...r,d:Date.now()});snd('ok');save();renderIdeas()}
+$('#fab').onclick=()=>openNote(0);
+function renderIdeas(){
+  if(S.cf&&!S.folders.find(f=>f.i==S.cf))S.cf=0;
+  const base=S.notes.filter(n=>!q?(n.f||0)==(S.cf||0):((n.h||'')+' '+n.t).toLowerCase().includes(q.toLowerCase()));
+  const all=[...new Set(base.flatMap(n=>(n.t.match(/#[^\s#\[\]]+/g)||[]).map(x=>x.slice(1))))];
+  const list=base.filter(n=>!tagF||n.t.includes('#'+tagF)),subs=q?[]:S.folders.filter(f=>(f.p||0)==(S.cf||0));
+  const crumbs=(()=>{const a=[];let f=S.folders.find(x=>x.i==S.cf);while(f){a.unshift(f);f=S.folders.find(x=>x.i==f.p)}return a})();
+  $('#t3').innerHTML=`<h1>فكرة 💭</h1><span class="chip" style="display:inline-block;margin-top:8px">${acct||'💾 محفوظ على جهازك فقط'}</span>
+  <input id="sq" class="srch" placeholder="🔍 بحث في كل الملفات…" value="${esc(q)}">
+  <div class="crumbs"><span class="cr ${S.cf?'':'on'}" data-fo="0">🗂️ الرئيسي</span>${crumbs.map(f=>`<i>›</i><span class="cr ${f.i==S.cf?'on':''}" data-fo="${f.i}" data-u>${esc(f.n)}</span>`).join('')}</div>
+  <div class="tb"><button class="g" id="nf">＋ 📁 مجلد جديد</button><button id="nn">＋ 📝 ملف جديد</button></div>
+  ${subs.length?`<div class="fg">${subs.map(f=>`<div class="fc" data-fo="${f.i}"><span class="fi">📁</span><span class="fn" data-u>${esc(f.n)}</span><small>📄 ${cnt(f.i)}</small><span class="fa"><button class="x" data-rn="${f.i}">✏️</button><button class="x" data-dl="${f.i}">🗑️</button></span></div>`).join('')}</div>`:''}
+  ${all.length?`<div class="chips"><span class="chip ${tagF?'':'on'}" data-g="">الكل</span>${all.map(t=>`<span class="chip ${tagF==t?'on':''}" data-g="${esc(t)}" data-u>#${esc(t)}</span>`).join('')}</div>`:''}
+  ${list.length?`<div class="ng">${list.map(n=>`<div class="note" data-open="${n.d}">${n.h?`<b class="nt" data-u>${esc(n.h)}</b>`:''}<div class="pv" data-u>${rich(n.t)}</div><small>${new Date(n.d).toLocaleString(S.lang=='en'?'en-US':'ar-EG',{dateStyle:'medium',timeStyle:'short'})}${n.e?' • اتعدّلت':''}${q&&n.f?` • <span data-u>📁 ${esc(fpath(n.f))}</span>`:''}</small><div class="na"><button data-open="${n.d}">✏️ تعديل</button><button class="g" data-x="${n.d}">🗑️ حذف</button></div></div>`).join('')}</div>`:(subs.length?'':`<div class="empty"><div>📝</div>لسه مفيش ملفات هنا<br><small>ابدأ بإضافة ملف أو مجلد</small></div>`)}`;
+}
+$('#t3').onclick=async e=>{const t=e.target,D=t.dataset,c=s=>t.closest(s);
+  const rn=c('[data-rn]');if(rn){const f=S.folders.find(x=>x.i==rn.dataset.rn),nm=await ask('اسم المجلد؟',f.n);if(f&&nm&&nm.trim()){f.n=nm.trim();save();renderIdeas()}return}
+  const dl=c('[data-dl]');if(dl){if(await sure('تحذف المجلد؟ الملفات اللي جواه هتتنقل للمجلد الأعلى.')){const id=+dl.dataset.dl,f=S.folders.find(x=>x.i==id),p=f.p||0;S.folders.forEach(x=>{if(x.p==id)x.p=p});S.notes.forEach(n=>{if(n.f==id)n.f=p});S.folders=S.folders.filter(x=>x.i!=id);if(S.cf==id)S.cf=p;save();renderIdeas()}return}
+  const fo=c('[data-fo]');if(fo){S.cf=+fo.dataset.fo;q='';tagF=null;save();return renderIdeas()}
+  if(t.id=='nf'){const nm=await ask('اسم المجلد؟');if(nm&&nm.trim()){S.folders.push({i:Date.now(),n:nm.trim(),p:S.cf||0});snd('ok');save();renderIdeas()}return}
+  if(t.id=='nn')return openNote(0);
+  if(D.g!==undefined){tagF=D.g||null;return renderIdeas()}
+  if(D.l){const k=D.l.toLowerCase(),n=S.notes.find(n=>(n.h||'').toLowerCase()==k);q='';tagF=null;if(n){S.cf=n.f||0;renderIdeas();return openNote(n.d)}return openNote(0,D.l)}
+  const x=c('[data-x]');if(x){if(await sure('متأكد إنك عايز تحذف؟')){S.notes=S.notes.filter(n=>n.d!=x.dataset.x);save();renderIdeas()}return}
+  const o=c('[data-open]');if(o)openNote(+o.dataset.open)};
+$('#t3').addEventListener('change',e=>{if(e.target.id=='sq'){q=e.target.value.trim();renderIdeas()}});
+
+/* ---------- sounds ---------- */
+var AC;
+const M={ding:[[880,0,.3],[1320,.15,.5]],arp:[[523,0,.15],[659,.12,.15],[784,.24,.15],[1047,.36,.5]],coin:[[988,0,.08],[1319,.08,.4]],soft:[[440,0,.4],[554,.3,.4],[659,.6,.6]],alarm:[[880,0,.2],[660,.25,.2],[880,.5,.2],[660,.75,.3]],fan:[[392,0,.12],[392,.15,.12],[392,.3,.12],[523,.45,.6]]};
+const DEF={ok:'ding',big:'arp',end:'fan',brk:'alarm'};
+function snd(t,cu){try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();if(AC.state=='suspended')AC.resume();
+ const Q=cu||(t=='tick'?[[700,0,.08]]:M[(S.sn||{})[t]||DEF[t]]);if(!Q)return;
+ Q.forEach(([f,d,l])=>{const o=AC.createOscillator(),g=AC.createGain(),a=AC.currentTime+d;o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,a);g.gain.linearRampToValueAtTime(.25,a+.02);g.gain.exponentialRampToValueAtTime(.001,a+l+.15);o.connect(g);g.connect(AC.destination);o.start(a);o.stop(a+l+.2)})}catch(e){}}
+
+/* ---------- pomodoro ---------- */
+let pm={m:'w',left:1500,run:0,end:0},fmOn=false;
+const mmss=n=>String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0');
+const gName=()=>{const g=S.goals.find(g=>g.i==S.pt);return g?g.n:''};
+const focusMin=i=>S.pomo.filter(p=>p.g==i).reduce((a,p)=>a+p.m,0);
+const taskSel=id=>`<button class="sel" id="${id}">🎯 ${gName()?`<span data-u>${esc(gName())}</span>`:'بدون مهمة'}</button>`;
+const ptot=()=>(pm.m=='w'?(S.pw||25):(S.pb||5))*60;
+const ringOff=()=>Math.min(603,Math.max(0,603*(1-pm.left/ptot())));
+const ring=()=>`<div class="ringw"><svg class="ring" viewBox="0 0 220 220"><circle class="rt" cx="110" cy="110" r="96"/><circle class="rg" cx="110" cy="110" r="96" style="stroke-dashoffset:${ringOff()}"/></svg><div class="big pt">${mmss(pm.left)}</div></div>`;
+function setTime(el,t){if(el._v===t)return;const o=el._v||'';el._v=t;el.innerHTML=[...t].map((c,i)=>`<span class="${c!==o[i]?'flip':''}">${c}</span>`).join('')}
+function tickUI(){document.querySelectorAll('.pt').forEach(e=>setTime(e,mmss(pm.left)));document.querySelectorAll('.rg').forEach(c=>c.style.strokeDashoffset=ringOff())}
+async function pickUI(){const v=await choose('المهمة',[{v:0,l:'بدون مهمة'},...S.goals.map(g=>({v:g.i,l:g.n,u:1}))],S.pt||0);if(v!==undefined)pickTask(v)}
+function pomoCard(){return `<div class="card hero pomo" style="margin-top:14px">${seg()}${ring()}<div style="margin:6px 0 12px">${taskSel('ptask')}</div><div class="pbtn"><button class="big" id="ps">${pm.run?'إيقاف':'ابدأ'}</button><button class="g" id="pr">↺ إعادة</button><button class="g" id="pf">⛶ وضع التركيز</button></div><div class="dur"><label><span>تركيز (د)</span><input id="pw" type="number" min="1" value="${S.pw||25}"></label><label><span>راحة (د)</span><input id="pb" type="number" min="1" value="${S.pb||5}"></label></div></div>`}
+function renderFocus(){$('#fmc').innerHTML=`${seg()}${ring()}<div style="width:100%">${taskSel('ftask')}</div><div style="display:flex;gap:10px"><button id="fs" style="padding:14px 34px;font-size:18px">${pm.run?'إيقاف':'ابدأ'}</button><button class="g" id="fr" style="padding:14px 26px;font-size:18px">إعادة</button></div>`}
+let orbR=0,orbT=0;
+let stars=null;
+function orbLoop(){if(!fmOn||S.fx===false||document.hidden){orbR=0;return}
+ const c=$('#orb'),x=c.getContext('2d'),dp=devicePixelRatio||1,w=c.clientWidth,h=c.clientHeight;if(c.width!=Math.round(w*dp)){c.width=Math.round(w*dp);c.height=Math.round(h*dp)}
+ if(!stars||stars.w!=w||stars.h!=h)stars={w,h,a:Array.from({length:Math.round(w*h/4500)},()=>({x:Math.random(),y:Math.random(),z:Math.random(),p:Math.random()*6.28}))};
+ x.setTransform(dp,0,0,dp,0,0);x.clearRect(0,0,w,h);x.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--lt').trim()||'#fff';
+ for(const s of stars.a){s.y-=.00012*(.3+s.z);s.x+=.00005*(.3+s.z);if(s.y<0){s.y=1;s.x=Math.random()}if(s.x>1)s.x=0;s.p+=.025+s.z*.03;
+  x.globalAlpha=(.25+.65*s.z)*(.55+.45*Math.sin(s.p));x.beginPath();x.arc(s.x*w,s.y*h,.5+2*s.z*s.z,0,7);x.fill()}
+ x.globalAlpha=1;orbR=requestAnimationFrame(orbLoop)}
+document.addEventListener('visibilitychange',()=>{if(fmOn&&!orbR)orbLoop()});
+function focusOpen(){fmOn=true;renderFocus();$('#fm').classList.add('on');if(!orbR)orbLoop()}
+function focusClose(){fmOn=false;$('#fm').classList.remove('on')}
+function pomoRefresh(){renderGrowth();if(fmOn)renderFocus()}
+const seg=()=>`<div class="seg"><span data-pm="w" class="${pm.m=='w'?'on':''}">تركيز 🍅</span><span data-pm="b" class="${pm.m=='b'?'on':''}">راحة ☕</span></div>`;
+async function pomoMode(m){if(pm.m==m)return;snd('tick');
+ if(pm.run){pm.left=Math.max(0,Math.round((pm.end-Date.now())/1000));pm.run=0;pomoRefresh();
+  const v=await choose('الجلسة واقفة',[{v:'c',l:'▶ كمّل'},{v:'s',l:'💾 خروج وحفظ'},{v:'x',l:'✖ إلغاء الجلسة'}],'c');
+  if(v=='c'){pm.end=Date.now()+pm.left*1000;pm.run=1;return pomoRefresh()}
+  if(v===undefined)return;
+  if(v=='s'&&pm.m=='w'){const el=Math.round((ptot()-pm.left)/60);if(el>0){S.pomo.push({d:Date.now(),m:el,g:S.pt||0});save();snd('ok')}}}
+ pm={m,left:(m=='w'?S.pw||25:S.pb||5)*60,run:0,end:0};pomoRefresh()}
+async function pomoToggle(){snd('tick');
+ if(!pm.run){pm.end=Date.now()+pm.left*1000;pm.run=1;return pomoRefresh()}
+ pm.left=Math.max(0,Math.round((pm.end-Date.now())/1000));pm.run=0;pomoRefresh();
+ const v=await choose('الجلسة واقفة',[{v:'c',l:'▶ كمّل'},{v:'s',l:'💾 خروج وحفظ'},{v:'x',l:'✖ إلغاء الجلسة'}],'c');
+ if(v=='c'){pm.end=Date.now()+pm.left*1000;pm.run=1;return pomoRefresh()}
+ if(v=='s'||v=='x'){if(v=='s'&&pm.m=='w'){const el=Math.round((ptot()-pm.left)/60);if(el>0){S.pomo.push({d:Date.now(),m:el,g:S.pt||0});snd('ok')}}
+  pm={m:'w',left:(S.pw||25)*60,run:0,end:0};if(fmOn)focusClose();save();pomoRefresh()}}
+function pomoReset(){pm={m:'w',left:(S.pw||25)*60,run:0,end:0};pomoRefresh()}
+function pickTask(v){S.pt=+v;save();pomoRefresh()}
+$('#t2').addEventListener('click',e=>{const id=e.target.id,D=e.target.dataset;if(id=='ps')pomoToggle();if(id=='pr')pomoReset();if(id=='pf')focusOpen();const sg=e.target.closest('[data-pm]');if(sg)pomoMode(sg.dataset.pm);if(e.target.closest('#ptask'))pickUI();if(D.pg){S.pt=+D.pg;save();focusOpen();renderGrowth()}});
+$('#fm').addEventListener('click',e=>{const id=e.target.id;if(id=='fs')pomoToggle();if(id=='fr')pomoReset();if(id=='fx')focusClose();const sg=e.target.closest('[data-pm]');if(sg)pomoMode(sg.dataset.pm);if(e.target.closest('#ftask'))pickUI()});
+$('#fm').addEventListener('change',e=>{if(e.target.id=='ftask')pickTask(e.target.value)});
+$('#t2').addEventListener('change',e=>{const id=e.target.id;if(id=='ptask')return pickTask(e.target.value);if(id!='pw'&&id!='pb')return;S[id]=Math.max(1,+e.target.value||1);if(!pm.run)pm.left=(pm.m=='w'?S.pw||25:S.pb||5)*60;save();renderGrowth()});
+addEventListener('keydown',e=>{if(e.key=='Escape'&&fmOn)focusClose()});
+setInterval(()=>{if(!pm.run)return;pm.left=Math.max(0,Math.round((pm.end-Date.now())/1000));tickUI();document.title=mmss(pm.left)+' 🍅';
+ if(!pm.left){if(pm.m=='w'){S.pomo.push({d:Date.now(),m:S.pw||25,g:S.pt||0});save();snd('end');pm.m='b';pm.left=(S.pb||5)*60}else{snd('brk');pm.m='w';pm.left=(S.pw||25)*60}pm.run=0;document.title=TR('حياتي');try{navigator.vibrate([300,100,300])}catch(e){}pomoRefresh()}},1000);
+
+/* ---------- menu + analytics ---------- */
+const dk=o=>{const d=new Date();d.setDate(d.getDate()-o);return d.toLocaleDateString('en-CA')};
+const DN=()=>S.lang=='en'?['S','M','T','W','T','F','S']:['ح','ن','ث','ر','خ','ج','س'];
+const pf=k=>Object.values(S.pray[k]||{}).filter(Boolean).length,wf=k=>S.wird.days[k]||0;
+const ff=k=>S.pomo.filter(p=>new Date(p.d).toLocaleDateString('en-CA')==k).reduce((a,p)=>a+p.m,0);
+const sum=(f,o)=>Array.from({length:7},(_,i)=>f(dk(o+i))).reduce((a,b)=>a+b,0);
+function chart(t,f,max,u){const a=sum(f,0),b=sum(f,7),d=b?Math.round((a-b)/b*100):null;
+ return `<h2>${t}</h2><div class="card"><div class="bars">${Array.from({length:7},(_,i)=>{const k=dk(6-i),v=f(k);return `<div class="bc">${v}<i style="height:${Math.max(3,Math.min(v,max)/max*70)}%"></i>${DN()[new Date(k+'T12:00').getDay()]}</div>`}).join('')}</div><div class="sub" style="margin-top:8px">الأسبوع: ${a} ${u} ${d===null?'':`<span class="${d>=0?'up':'dn'}">${d>=0?'▲':'▼'} ${Math.abs(d)}% عن الأسبوع اللي فات</span>`}</div></div>`}
+function ovShow(h){$('#ov').innerHTML='<div class="ovi"><button class="g" id="cl">✕ إغلاق</button>'+h+'</div>';$('#ov').classList.add('on')}
+function byTask(){const b={};S.pomo.forEach(p=>{if(Date.now()-p.d<6048e5){const g=S.goals.find(x=>x.i==p.g),n=g?g.n:'';b[n]=(b[n]||0)+p.m}});const k=Object.keys(b);
+ return k.length?`<h2>التركيز حسب المهمة</h2>${k.sort((x,y)=>b[y]-b[x]).map(n=>`<div class="card row">${n?`<span data-u>${esc(n)}</span>`:'<span>بدون مهمة</span>'}<b>${b[n]} دقيقة</b></div>`).join('')}`:''}
+function analytics(){let st=0;for(let o=pf(dk(0))==5?0:1;pf(dk(o))==5;o++)st++;
+ const av=S.goals.length?Math.round(S.goals.reduce((a,g)=>a+g.p,0)/S.goals.length):0,dn=S.goals.filter(g=>g.p>=100);
+ ovShow(`<h1>تحليل الإنجازات 📊</h1><div class="sub">آخر ٧ أيام ومقارنتها بالأسبوع اللي قبله</div><div class="grid g3" style="margin-top:14px">
+ <div class="stat">🕌<b>${sum(pf,0)}/35</b><span class="sub">صلوات الأسبوع</span></div><div class="stat">🔥<b>${st}</b><span class="sub">أيام صلوات كاملة متتالية</span></div>
+ <div class="stat">📖<b>${Array.from({length:7},(_,i)=>wf(dk(i))>=S.wird.goal).filter(Boolean).length}/7</b><span class="sub">أيام حققت هدف الورد</span></div><div class="stat">🍅<b>${(sum(ff,0)/60).toFixed(1)}</b><span class="sub">ساعات تركيز الأسبوع</span></div>
+ <div class="stat">🌱<b>${av}%</b><span class="sub">متوسط تقدم أهدافي</span></div><div class="stat">💭<b>${S.notes.length}</b><span class="sub">ملاحظة</span></div></div>
+ <div class="ac3">${chart('الصلوات يومياً',pf,5,'صلاة')}${chart('الورد (صفحات)',wf,Math.max(S.wird.goal,...Array.from({length:7},(_,i)=>wf(dk(i)))),'صفحة')}${chart('دقائق التركيز',ff,Math.max(60,...Array.from({length:7},(_,i)=>ff(dk(i)))),'دقيقة')}</div>${byTask()}
+ <h2>أهداف خلصتها ✅</h2>${dn.length?dn.map(g=>`<div class="card">${esc(g.n)}</div>`).join(''):'<div class="card sub">لسه ما فيش — كمّل أهدافك لـ ١٠٠٪.</div>'}`)}
+const lsg=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
+const lnkBtn=()=>lsg('fbcfg')?'<div style="margin-top:16px"><button class="g" data-a="lnk" style="width:100%">🔗 رابط إعداد الأجهزة التانية</button><input id="lk" readonly style="display:none;margin-top:8px;direction:ltr"></div>':'';
+function account(){
+ if(!fa)return ovShow(`<h1>👤 الحساب</h1><div class="card"><b>إعداد الحساب (مرة واحدة)</b><div class="sub" style="margin:8px 0">ادخل على console.firebase.google.com ← أنشئ مشروع ← Authentication: فعّل Email/Password و Google ← Firestore: أنشئ قاعدة بيانات ← Project settings ← Your apps ← Web. انسخ الإعدادات والصقها هنا.</div><textarea id="fbc" rows="6" placeholder="الصق إعدادات Firebase هنا" style="direction:ltr;font-family:monospace"></textarea><div style="display:flex;gap:8px;margin-top:10px"><button data-a="cfg">حفظ الإعدادات</button>${lsg('fbcfg')?'<button class="g" data-a="clr">مسح الإعدادات</button>':''}</div><div class="msg" id="am">${FB.apiKey&&!window.firebase?'مكتبة Firebase ما اتحملتش — اتأكد من النت.':''}</div></div>`);
+ ovShow(usr?`<h1>👤 الحساب</h1><div class="card" data-u>${esc(usr.email||usr.displayName||'')}</div><div class="msg">بياناتك متزامنة على حسابك.</div><div style="height:12px"></div><button data-a="out">تسجيل الخروج</button><div class="msg" id="am"></div>${lnkBtn()}`:`<h1>👤 الحساب</h1><div class="card"><input id="em" type="email" placeholder="الإيميل" style="margin-bottom:8px;direction:ltr"><input id="pw2" type="password" placeholder="الباسورد" style="direction:ltr"><div style="display:flex;gap:8px;margin-top:10px"><button data-a="in">دخول</button><button class="g" data-a="up">حساب جديد</button><button class="x" data-a="rs">نسيت الباسورد؟</button></div></div><button class="g" data-a="g" style="width:100%">دخول بحساب Google</button><div class="msg" id="am"></div>${lnkBtn()}`)}
+const FE={'auth/invalid-credential':'الإيميل أو الباسورد غلط.','auth/wrong-password':'الإيميل أو الباسورد غلط.','auth/user-not-found':'الإيميل أو الباسورد غلط.','auth/email-already-in-use':'الإيميل ده مسجل قبل كده — اضغط دخول.','auth/weak-password':'الباسورد ضعيف (٦ حروف على الأقل).','auth/invalid-email':'الإيميل مش صحيح.','auth/network-request-failed':'مشكلة في الإنترنت.','auth/operation-not-allowed':'الطريقة دي مش مفعّلة: فعّلها من Firebase ← Authentication ← Sign-in method.','auth/too-many-requests':'محاولات كتير، استنى شوية وجرّب تاني.'};
+$('#mn').onclick=e=>{e.stopPropagation();$('#menu').classList.toggle('on')};
+document.addEventListener('click',()=>$('#menu').classList.remove('on'));
+$('#menu').onclick=e=>{const m=(e.target.closest('[data-m]')||{dataset:{}}).dataset.m;if(m=='fm')focusOpen();if(m=='gs')globalSearch();if(m=='wk')weeklyReview();if(m=='bk')exportBackup();if(m=='im')$('#importFile').click();if(m=='cal'){const n=new Date();cy=n.getFullYear();cm=n.getMonth();csel=day();calendar()}if(m=='an')analytics();if(m=='ac')account();if(m=='sn')sounds();if(m=='th')appearance();if(m=='in')install();if(m=='lg'){S.lang=S.lang=='en'?'ar':'en';save();applyLang()}};
+const SL={ok:'إنجاز صغير (تأشير صلاة، صفحة ورد…)',big:'إنجاز كبير (هدف أو ٥ صلوات)',end:'نهاية جلسة التركيز',brk:'نهاية الراحة'},SN={ding:'جرس',arp:'سلم صاعد',coin:'لعبة',soft:'هادئة',alarm:'تنبيه',fan:'فانفير',off:'بدون صوت'},ADN={file:'ملف adhan.mp3 من الريبو',custom:'الملف اللي رفعته',soft:'نغمة هادئة',bell:'جرس طويل',off:'بدون صوت'};
+function sounds(){const pn=times(new Date()).map(p=>p[0]);
+ ovShow(`<h1>النغمات 🔔</h1><div class="sub">اختار نغمة لكل حدث — بتسمعها فوراً</div><div style="height:12px"></div>${Object.keys(SL).map(k=>`<div class="card"><div class="sub" style="margin-bottom:8px">${SL[k]}</div><div class="row"><button class="sel" data-snp="${k}" style="flex:1">${SN[(S.sn||{})[k]||DEF[k]]}</button><button data-pv="${k}">▶</button></div></div>`).join('')}
+ <h2>الأذان</h2><div class="card"><div class="sub" style="margin-bottom:8px">صوت الأذان وقت الصلاة</div><div class="row"><button class="sel" data-adp="1" style="flex:1">${ADN[S.adh||'soft']}</button><button data-adt="1">▶</button></div>
+ <button class="g" data-adf="1" style="width:100%;margin-top:10px">📂 اختار ملف الأذان</button>
+ <div class="msg" id="sm">${S.adhName?'الملف: <span data-u>'+esc(S.adhName)+'</span><br>':''}ضيف ملف باسم adhan.mp3 جنب index.html في الريبو لو عايز تستخدمه.<br>الأذان بيشتغل طول ما الموقع مفتوح على الجهاز.</div>
+ <div class="chips" style="margin-top:12px">${pn.map((n,i)=>`<span class="chip ${(S.ap||{})[i]===false?'':'on'}" data-ap="${i}">${n}</span>`).join('')}</div></div>`)}
+$('#ov').onclick=async e=>{if(e.target.id=='cl')return $('#ov').classList.remove('on');if(e.target.dataset.pv)return snd(e.target.dataset.pv);
+ const rd=e.target.closest('[data-rd]');if(rd){S.reviews.splice(+rd.dataset.rd,1);save();return weeklyReview()}
+ const gs=e.target.closest('[data-gs]');if(gs){const[k,id]=gs.dataset.gs.split(':');$('#ov').classList.remove('on');
+  if(k=='n'){const n=S.notes.find(x=>x.d==id);if(n){go(3);S.cf=n.f||0;q='';tagF=null;renderIdeas();openNote(n.d)}}
+  if(k=='f'){go(3);S.cf=+id;q='';tagF=null;save();renderIdeas()}
+  if(k=='g'){go(2);gf='all';renderGrowth();setTimeout(()=>{const r=document.querySelector('[data-r="'+id+'"]');if(r)r.closest('.goal').scrollIntoView({behavior:'smooth',block:'center'})},60)}
+  if(k=='e'){const d=new Date(id+'T12:00');cy=d.getFullYear();cm=d.getMonth();csel=id;calendar()}
+  return}
+
+ if(e.target.closest('[data-adt]'))return playAdhan('الظهر');
+ if(e.target.closest('[data-adf]'))return $('#adf').click();
+ const ap=e.target.closest('[data-ap]');if(ap){S.ap=S.ap||{};S.ap[ap.dataset.ap]=S.ap[ap.dataset.ap]===false;save();return sounds()}
+ const adp=e.target.closest('[data-adp]');if(adp){const v=await choose('الأذان',Object.keys(ADN).map(k=>({v:k,l:ADN[k]})),S.adh||'soft');if(v!==undefined){S.adh=v;save();sounds()}return}
+ const cd=e.target.closest('[data-cd]');if(cd){csel=cd.dataset.cd;return calendar()}
+ const cn=e.target.closest('[data-cn]');if(cn){cm+=+cn.dataset.cn;if(cm<0){cm=11;cy--}if(cm>11){cm=0;cy++}return calendar()}
+ if(e.target.closest('[data-ca]')){const t=await ask('اسم الموعد؟');if(t&&t.trim()){S.ev=S.ev||[];S.ev.push({i:Date.now(),d:csel,t:t.trim()});snd('ok');save();calendar()}return}
+ const ce=e.target.closest('[data-ce]');if(ce){S.ev=(S.ev||[]).filter(x=>x.i!=ce.dataset.ce);save();return calendar()}
+const D0=e.target.dataset;const sp=e.target.closest('[data-snp]');if(sp){const k=sp.dataset.snp,v=await choose(SL[k],Object.keys(SN).map(n=>({v:n,l:SN[n]})),(S.sn||{})[k]||DEF[k]);if(v!==undefined){S.sn=S.sn||{};S.sn[k]=v;save();snd(k);sounds()}return}if(D0.sfx){S.fx=D0.sfx=='1';save();applyTheme();return appearance()}if(D0.sth){S.th=D0.sth;save();applyTheme();return appearance()}if(D0.sac){S.ac=D0.sac;save();applyTheme();return appearance()}const a=D0.a;if(!a)return;const say=t=>{const m=$('#am');if(m)m.textContent=t};
+ if(a=='cfg'){const o={};($('#fbc').value||'').replace(/["']?(\w+)["']?\s*:\s*["']([^"']*)["']/g,(_,k,v)=>{o[k]=v});if(!o.apiKey||!o.projectId)return say('الإعدادات ناقصة — لازم apiKey و projectId.');try{localStorage.setItem('fbcfg',JSON.stringify(o))}catch(er){}return location.reload()}
+ if(a=='clr'){try{localStorage.removeItem('fbcfg')}catch(er){}return location.reload()}
+ if(a=='lnk'){const u=location.origin+location.pathname+'#fb='+encodeURIComponent(btoa(lsg('fbcfg')||'{}')),i=$('#lk');i.style.display='block';i.value=u;i.select();try{navigator.clipboard.writeText(u);say('اتنسخ الرابط — افتحه على الجهاز التاني.')}catch(er){say('انسخ الرابط من الخانة.')}return}
+ if(!fa)return;const em=($('#em')||{}).value,pw=($('#pw2')||{}).value;
+ try{if(a=='in')await fa.signInWithEmailAndPassword(em,pw);if(a=='up')await fa.createUserWithEmailAndPassword(em,pw);if(a=='g')await fa.signInWithPopup(new firebase.auth.GoogleAuthProvider());if(a=='out')await fa.signOut();
+  if(a=='rs'){if(!em)return say('ادخل الإيميل الأول.');await fa.sendPasswordResetEmail(em.trim());return say('اتبعت رابط إعادة تعيين الباسورد على إيميلك.')}
+  $('#ov').classList.remove('on')}
+ catch(er){const c=er.code;if(c=='auth/popup-closed-by-user'||c=='auth/cancelled-popup-request')return;
+  if(c=='auth/popup-blocked'&&a=='g')return fa.signInWithRedirect(new firebase.auth.GoogleAuthProvider());
+  say(c=='auth/unauthorized-domain'?'الدومين ده مش مضاف في Firebase: ضيفه من Authentication ← Settings ← Authorized domains: '+location.hostname:FE[c]||er.message)}};
+
+/* ---------- language + theme ---------- */
+const DICT=`الفجر=Fajr|الظهر=Dhuhr|العصر=Asr|المغرب=Maghrib|العشاء=Isha|حياتي=My Life|📊 تحليل الإنجازات=📊 Achievements analysis|🔔 النغمات=🔔 Sounds|المظهر=Appearance|الحساب=Account|الدين=Faith|الصحة=Health|تطوير ذات=Growth|فكرة=Ideas|الصلاة الجاية:=Next prayer:|صلواتي النهاردة=Today's prayers|وردي القرآني=My Quran wird|+ صفحة=+ Page|صفحة=pages|الهدف اليومي=Daily goal|الهدف=Goal|آخر ٧ أيام ومقارنتها بالأسبوع اللي قبله=Last 7 days compared with the week before|آخر ٧ أيام=Last 7 days|📍 حدّد موقعي=📍 Locate me|المواعيد محسوبة لموقعك الحالي=Times calculated for your current location|ما قدرتش أعرف موقعك — اسمح بالوصول للموقع واضغط الزرار. دلوقتي بستخدم القاهرة مؤقتاً.=Couldn't get your location — allow location access and tap the button. Using Cairo for now.|بحدد موقعك…=Finding your location…|طريقة الحساب: الهيئة المصرية العامة للمساحة.=Method: Egyptian General Authority of Survey.|متابعة من ساعة=Tracking from watch|نبضة / دقيقة=beats / min|🔗 اربط الساعة (Bluetooth)=🔗 Connect watch (Bluetooth)|فعّل Bluetooth في الساعة وخليها قريبة. الاتصال المباشر بيشتغل لو الساعة بتبث النبض بشكل معياري.=Turn on Bluetooth on the watch and keep it close. Direct connection works only if the watch broadcasts heart rate in the standard way.|أرقام النهاردة (تقدر تدخلها من تطبيق Oraimo)=Today's numbers (you can enter them from the Oraimo app)|خطوات=Steps|ساعات نوم=Sleep hours|أكسجين %=Oxygen %|أكواب مية=Water cups|✅ متصل بـ =✅ Connected to |ما قدرتش أتصل. جرّب Chrome على أندرويد، وافتح الصفحة في المتصفح مباشرة. لو الساعة مش بتبث النبض، أدخل الأرقام يدوي.=Couldn't connect. Try Chrome on Android and open the page directly in the browser. If the watch doesn't broadcast heart rate, enter the numbers manually.|كورسات ومهارات بشتغل عليها=Courses and skills I'm working on|جلسات النهاردة:=Today's sessions:|تركيز (د)=Focus (min)|راحة (د)=Break (min)|تركيز=Focus|راحة=Break|ابدأ=Start|إيقاف=Pause|إعادة=Reset|كورس أو مهارة جديدة…=New course or skill…|لسه فاضي — ضيف أول كورس أو مهارة.=Nothing yet — add your first course or skill.|اتعدّلت=edited|💾 محفوظ على جهازك فقط=💾 Saved on this device only|☁️ متزامن — =☁️ Synced — |إيه اللي في بالك؟=What's on your mind?|ملاحظة=notes|نشر=Post|الكل=All|✏️ تعديل=✏️ Edit|🗑️ حذف=🗑️ Delete|إلغاء=Cancel|حفظ=Save|متأكد إنك عايز تحذف؟=Are you sure you want to delete?|تحليل الإنجازات=Achievements analysis|صلوات الأسبوع=prayers this week|أيام صلوات كاملة متتالية=days in a row with all prayers|أيام حققت هدف الورد=days the Quran goal was reached|ساعات تركيز الأسبوع=focus hours this week|متوسط تقدم أهدافي=average goal progress|الصلوات يومياً=Daily prayers|الورد (صفحات)=Quran wird (pages)|دقائق التركيز=Focus minutes|صلاة=prayers|دقيقة=min|الأسبوع:=Week:|عن الأسبوع اللي فات=vs last week|أهداف خلصتها ✅=Goals completed ✅|لسه ما فيش — كمّل أهدافك لـ ١٠٠٪.=None yet — keep going until 100%.|الحساب لسه مش مفعّل. لازم تضيف إعدادات Firebase بتاعتك في متغير FB في أول السكريبت.=Account is not enabled yet. Add your Firebase settings to the FB variable at the top of the script.|بياناتك متزامنة على حسابك.=Your data is synced to your account.|تسجيل الخروج=Sign out|الإيميل=Email|الباسورد=Password|دخول بحساب Google=Sign in with Google|دخول=Sign in|حساب جديد=New account|اختار نغمة لكل حدث — بتسمعها فوراً=Pick a sound for each event — you hear it instantly|النغمات=Sounds|إنجاز صغير (تأشير صلاة، صفحة ورد…)=Small achievement (checking a prayer, a Quran page…)|إنجاز كبير (هدف أو ٥ صلوات)=Big achievement (a goal or all 5 prayers)|نهاية جلسة التركيز=End of focus session|نهاية الراحة=End of break|جرس=Bell|سلم صاعد=Rising scale|لعبة=Game|هادئة=Calm|تنبيه=Alert|فانفير=Fanfare|بدون صوت=No sound|✕ إغلاق=✕ Close|الوضع=Mode|☀️ فاتح=☀️ Light|🌙 داكن=🌙 Dark|اللون الأساسي=Main color|🍷 برجندي=🍷 Burgundy|🌿 أخضر=🌿 Green|الساعة=the watch|تثبيت التطبيق=Install app|📱 أندرويد (Chrome)=📱 Android (Chrome)|اضغط ⋮ فوق في المتصفح، وبعدين "تثبيت التطبيق" أو "Add to Home screen".=Tap ⋮ in the browser, then "Install app" or "Add to Home screen".|🍎 آيفون (Safari)=🍎 iPhone (Safari)|اضغط زرار المشاركة ⬆️ وبعدين "Add to Home Screen".=Tap the Share button ⬆️ then "Add to Home Screen".|💻 كمبيوتر (Chrome / Edge)=💻 Computer (Chrome / Edge)|اضغط أيقونة التثبيت في شريط العنوان، أو قايمة المتصفح ← "Install".=Click the install icon in the address bar, or the browser menu → "Install".|لازم تفتح الموقع من الرابط على الإنترنت (مش من الملف مباشرة).=Open the site from its web link (not directly from the file).|وضع التركيز=Focus mode|تقدمك وإنجازاتك=Your progress and achievements|بومودورو بشاشة كاملة=Full-screen Pomodoro|نغمات الإنجاز والراحة=Achievement and break sounds|الوضع واللون=Mode and color|تغيير اللغة=Change language|على الموبايل أو الكمبيوتر=On mobile or computer|تسجيل الدخول والمزامنة=Sign-in and sync|بدون مهمة=No task|ركّز عليه=Focus on it|✕ خروج=✕ Exit|دقيقة تركيز=min focus|التركيز حسب المهمة=Focus by task|إعداد الحساب (مرة واحدة)=Account setup (one time)|ادخل على console.firebase.google.com ← أنشئ مشروع ← Authentication: فعّل Email/Password و Google ← Firestore: أنشئ قاعدة بيانات ← Project settings ← Your apps ← Web. انسخ الإعدادات والصقها هنا.=Go to console.firebase.google.com → create a project → Authentication: enable Email/Password and Google → Firestore: create a database → Project settings → Your apps → Web. Copy the config and paste it here.|الصق إعدادات Firebase هنا=Paste Firebase config here|حفظ الإعدادات=Save settings|مسح الإعدادات=Clear settings|نسيت الباسورد؟=Forgot password?|اتبعت رابط إعادة تعيين الباسورد على إيميلك.=Password reset link sent to your email.|ادخل الإيميل الأول.=Enter your email first.|الإعدادات ناقصة — لازم apiKey و projectId.=Config incomplete — apiKey and projectId are required.|مكتبة Firebase ما اتحملتش — اتأكد من النت.=Firebase failed to load — check your connection.|الإيميل أو الباسورد غلط.=Wrong email or password.|الإيميل ده مسجل قبل كده — اضغط دخول.=This email is already registered — tap Sign in.|الباسورد ضعيف (٦ حروف على الأقل).=Password is too weak (at least 6 characters).|الإيميل مش صحيح.=Invalid email.|مشكلة في الإنترنت.=Network problem.|الدومين ده مش مضاف في Firebase: ضيفه من Authentication ← Settings ← Authorized domains:=This domain is not authorized in Firebase: add it under Authentication → Settings → Authorized domains:|الطريقة دي مش مفعّلة: فعّلها من Firebase ← Authentication ← Sign-in method.=This sign-in method is not enabled: enable it in Firebase → Authentication → Sign-in method.|محاولات كتير، استنى شوية وجرّب تاني.=Too many attempts, wait a bit and try again.|الملفات=Files|الرئيسي=Root|🔍 بحث في كل الملفات…=🔍 Search all files…|عنوان الملف (اختياري)=File title (optional)|اسم المجلد؟=Folder name?|تحذف المجلد؟ الملفات اللي جواه هتتنقل للمجلد الأعلى.=Delete this folder? Its files will move to the parent folder.|موافق=OK|المهمة=Task|تأثيرات 3D=3D effects|✨ مفعّلة=✨ On|🚫 متوقفة=🚫 Off|مجلد جديد=New folder|ملف جديد=New file|تعديل الملف=Edit file|لسه مفيش ملفات هنا=No files here yet|ابدأ بإضافة ملف أو مجلد=Start by adding a file or a folder|اختار المجلد=Choose folder|اسم المهمة؟=Task name?|تحذف المهمة دي؟=Delete this task?|قيد التنفيذ=In progress|مكتمل=Completed|مهام مكتملة=tasks completed|جلسات النهاردة=Today's sessions|✓ خلصت=✓ Done|↩ رجّعه=↩ Reopen|↺ إعادة=↺ Reset|🔵 أزرق=🔵 Blue|🟡 أصفر=🟡 Yellow|🔴 أحمر=🔴 Red|التقويم=Calendar|مواعيدك وإنجازات كل يوم=Your events and daily achievements|صلوات=prayers|صفحات الورد=Wird pages|ملاحظات=Notes|المواعيد=Events|＋ ضيف موعد=＋ Add event|اسم الموعد؟=Event name?|🟢 صلوات كاملة · 🔵 هدف الورد · 🔴 تركيز · 🟡 موعد=🟢 All prayers · 🔵 Wird goal · 🔴 Focus · 🟡 Event|الأذان=Adhan|صوت الأذان وقت الصلاة=Adhan sound at prayer time|ملف adhan.mp3 من الريبو=adhan.mp3 file from the repo|الملف اللي رفعته=The file I uploaded|نغمة هادئة=Soft tone|جرس طويل=Long bell|📂 اختار ملف الأذان=📂 Choose adhan file|الملف:=File:|ضيف ملف باسم adhan.mp3 جنب index.html في الريبو لو عايز تستخدمه.=Put a file named adhan.mp3 next to index.html in the repo if you want to use it.|الأذان بيشتغل طول ما الموقع مفتوح على الجهاز.=The adhan plays only while the app is open on the device.|ما قدرتش أحفظ الملف على الجهاز.=Couldn't save the file on this device.|حان وقت صلاة=Time for|⏹ إيقاف=⏹ Stop|الجلسة واقفة=Session paused|▶ كمّل=▶ Continue|💾 خروج وحفظ=💾 Exit and save|✖ إلغاء الجلسة=✖ Cancel session|🔗 رابط إعداد الأجهزة التانية=🔗 Setup link for your other devices|اتنسخ الرابط — افتحه على الجهاز التاني.=Link copied — open it on your other device.|انسخ الرابط من الخانة.=Copy the link from the box.|خطوة صغيرة كل يوم=One small step every day|بحث شامل=Global search|ابحث في الملاحظات والمجلدات والأهداف والكورسات.=Search notes, folders, goals and courses.|اكتب كلمة للبحث…=Type a word to search…|مراجعة الأسبوع=Weekly review|استيراد نسخة احتياطية=Import a backup|📝 ملاحظة=📝 Note|ملاحظة بدون عنوان=Untitled note|🌱 هدف=🌱 Goal|📁 مجلد=📁 Folder|مفيش نتائج مطابقة.=No matching results.|ابدأ الكتابة لعرض النتائج.=Start typing to see results.|ملخص آخر ٧ أيام بناءً على البيانات المحفوظة في التطبيق.=Summary of the last 7 days based on the data saved in the app.|جلسات التركيز=Focus sessions|ملاحظات أُضيفت/عُدّلت=Notes added/edited|صلوات معلّمة كمكتملة=Prayers marked complete|الأهداف المكتملة المسجلة=Completed goals|اسأل نفسك=Ask yourself|إيه أفضل حاجة عملتها الأسبوع ده؟=What was the best thing you did this week?|اكتب إنجازك هنا…=Write your achievement here…|إيه أهم حاجة هتركز عليها الأسبوع الجاي؟=What will you focus on most next week?|اكتب أولوية واحدة…=Write one priority…|حفظ مراجعة الأسبوع=Save weekly review|اتحفظت مراجعة الأسبوع على جهازك.=Weekly review saved on your device.|اتعملت نسخة احتياطية من بياناتك على الجهاز. احتفظ بالملف في مكان آمن.=A backup of your data was created. Keep the file somewhere safe.|استرجاع النسخة هيستبدل البيانات الحالية على هذا الجهاز. متأكد؟=Restoring the backup will replace the current data on this device. Are you sure?|تم استرجاع النسخة الاحتياطية.=Backup restored.|الملف مش نسخة احتياطية صحيحة من تطبيق حياتي.=This file is not a valid backup of the app.|المراجعات السابقة=Previous reviews|📅 موعد=📅 Event|نسخة احتياطية=Backup|حمّل بياناتك كملف=Download your data as a file|استرجاع نسخة=Restore a backup|من ملف احتياطي=From a backup file|ملخص وأسئلة الأسبوع=Weekly summary and questions|ابحث في كل حاجة=Search everything`.split('|').map(x=>x.split('=')).sort((a,b)=>b[0].length-a[0].length);
+const E=x=>{if(!/[\u0600-\u06FF]/.test(x))return x;for(const[a,b]of DICT)if(x.includes(a))x=x.split(a).join(b);return x};
+const TR=x=>S.lang=='en'?E(x):x;
+const obs=new MutationObserver(()=>{if(S.lang=='en')tr()});
+function tr(){obs.disconnect();try{const en=S.lang=='en',w=document.createTreeWalker(document.body,4);let n;
+ while(n=w.nextNode()){const p=n.parentElement;if(!p||p.closest('[data-u],textarea,script,style'))continue;const v=n.nodeValue;let o;
+  if(n._t!==undefined&&v===n._t)o=n._o;else{o=v;n._o=v}
+  const r=en?E(o):o;if(r!==v)n.nodeValue=r;n._t=r}
+ document.querySelectorAll('[placeholder]').forEach(el=>{if(el._p===undefined)el._p=el.getAttribute('placeholder');el.setAttribute('placeholder',en?E(el._p):el._p)})}
+ finally{obs.observe(document.body,{childList:true,subtree:true,characterData:true})}}
+function applyTheme(){const h=document.documentElement;h.dataset.th=S.th||'dark';h.dataset.ac=S.ac||'bur';h.dataset.fx=S.fx===false?'off':'on'}
+function applyLang(){const en=S.lang=='en',h=document.documentElement;h.lang=en?'en':'ar';h.dir=en?'ltr':'rtl';document.title=TR('حياتي');
+ $('[data-m=lg] b').textContent=en?'العربية':'English';$('#ov').classList.remove('on');renderDeen();renderHealth();renderGrowth();renderIdeas();tr()}
+function appearance(){const th=S.th||'dark',ac=S.ac||'bur',fx=S.fx===false?'0':'1',c=(k,v,l,cur)=>`<span class="chip ${cur==v?'on':''}" data-${k}="${v}" style="padding:10px 16px;font-size:15px">${l}</span>`;
+ ovShow(`<h1>🎨 المظهر</h1><h2>الوضع</h2><div class="chips">${c('sth','light','☀️ فاتح',th)}${c('sth','dark','🌙 داكن',th)}</div><h2>اللون الأساسي</h2><div class="chips">${c('sac','bur','🍷 برجندي',ac)}${c('sac','green','🌿 أخضر',ac)}${c('sac','blue','🔵 أزرق',ac)}${c('sac','yellow','🟡 أصفر',ac)}${c('sac','red','🔴 أحمر',ac)}</div><h2>تأثيرات 3D</h2><div class="chips">${c('sfx','1','✨ مفعّلة',fx)}${c('sfx','0','🚫 متوقفة',fx)}</div>`)}
+
+/* ---------- 3D tilt ---------- */
+(function(){let cur=null;const reset=()=>{if(cur){cur.style.transform='';cur=null}};
+ addEventListener('pointermove',e=>{if(S.fx===false)return;const t=e.target.closest&&e.target.closest('.card,.note,.fc,.stat,.p,.goal');if(t!==cur)reset();
+  if(!t||e.target.closest('input,textarea,select,.bar,#fm,#dlg,#dlg2,#ov'))return;cur=t;const r=t.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+  t.style.transform=`perspective(700px) rotateX(${(-y*7).toFixed(2)}deg) rotateY(${(x*7).toFixed(2)}deg)`});
+ addEventListener('pointerup',()=>setTimeout(reset,140));addEventListener('scroll',reset,{passive:true});document.addEventListener('pointerleave',reset)})();
+
+/* ---------- adhan ---------- */
+const AM={soft:[[440,0,1.2],[554,1,1.2],[659,2,1.6],[554,3.6,1.2],[440,4.8,2.2]],bell:[[880,0,2.5],[1320,.1,2.5],[880,3,2.5],[1320,3.1,2.5]]};
+const idb=(m,k,v)=>new Promise((res,rej)=>{const o=indexedDB.open('life',1);o.onupgradeneeded=()=>o.result.createObjectStore('f');o.onerror=()=>rej(o.error);o.onsuccess=()=>{const st=o.result.transaction('f',m=='get'?'readonly':'readwrite').objectStore('f'),r=m=='get'?st.get(k):st.put(v,k);r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)}});
+let adhAu=null,adhDone={},adhT=0;
+function adhBanner(l){const b=$('#adh');clearTimeout(adhT);if(!l){b.classList.remove('on');b.innerHTML='';return}b.innerHTML=`<span>🕌 حان وقت صلاة ${l}</span><button id="adx">⏹ إيقاف</button>`;b.classList.add('on')}
+function adhStop(){if(adhAu){adhAu.pause();adhAu=null}adhBanner(null)}
+async function playAdhan(label){const m=S.adh||'soft';if(m=='off')return;adhStop();
+ const chime=k=>{snd('',AM[k]);adhBanner(label);adhT=setTimeout(()=>adhBanner(null),9000)};
+ if(m=='soft'||m=='bell')return chime(m);
+ try{let src='adhan.mp3';if(m=='custom'){const f=await idb('get','adhan');if(!f)return chime('soft');src=URL.createObjectURL(f)}
+  adhAu=new Audio(src);adhAu.onended=()=>adhBanner(null);adhAu.onerror=()=>{adhAu=null;chime('soft')};await adhAu.play();adhBanner(label)}catch(e){chime('soft')}}
+$('#adh').onclick=e=>{if(e.target.id=='adx')adhStop()};
+$('#adf').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;try{await idb('set','adhan',f);S.adh='custom';S.adhName=f.name;save();sounds()}catch(er){const m=$('#sm');if(m)m.textContent='ما قدرتش أحفظ الملف على الجهاز.'}};
+setInterval(()=>{if((S.adh||'soft')=='off')return;const n=new Date(),h=n.getHours()+n.getMinutes()/60,t=times(n),k=day();
+ for(let i=0;i<5;i++){if(adhDone[k+i]||(S.ap||{})[i]===false)continue;if(h>=t[i][1]&&h<t[i][1]+2/60){adhDone[k+i]=1;playAdhan(t[i][0])}}},1000);
+
+/* ---------- calendar ---------- */
+let cy=new Date().getFullYear(),cm=new Date().getMonth(),csel=day();
+function calendar(){const loc=S.lang=='en'?'en-US':'ar-EG',first=new Date(cy,cm,1),start=(first.getDay()+1)%7,dim=new Date(cy,cm+1,0).getDate(),hj=new Intl.DateTimeFormat(loc+'-u-ca-islamic',{day:'numeric'}),
+ wd=Array.from({length:7},(_,i)=>new Date(2024,0,6+i).toLocaleDateString(loc,{weekday:'short'}));let cells='<div></div>'.repeat(start);
+ for(let d=1;d<=dim;d++){const dt=new Date(cy,cm,d),k=dt.toLocaleDateString('en-CA'),p=pf(k);
+  cells+=`<div class="cd ${k==day()?'today':''} ${k==csel?'sel':''}" data-cd="${k}"><b>${d}</b><small>${hj.format(dt)}</small><span class="dots">${p==5?'<i class="g"></i>':p?'<i class="h"></i>':''}${wf(k)>=S.wird.goal?'<i class="b"></i>':''}${ff(k)?'<i class="r"></i>':''}${(S.ev||[]).some(x=>x.d==k)?'<i class="y"></i>':''}</span></div>`}
+ const ev=(S.ev||[]).filter(x=>x.d==csel),nn=S.notes.filter(n=>new Date(n.d).toLocaleDateString('en-CA')==csel);
+ ovShow(`<h1>📅 التقويم</h1><div class="row" style="margin:12px 0"><button class="g cnav" data-cn="-1">‹</button><b>${first.toLocaleDateString(loc,{month:'long',year:'numeric'})}</b><button class="g cnav" data-cn="1">›</button></div>
+ <div class="cal"><div class="cw">${wd.map(x=>`<span>${x}</span>`).join('')}</div><div class="cg">${cells}</div></div>
+ <div class="msg">🟢 صلوات كاملة · 🔵 هدف الورد · 🔴 تركيز · 🟡 موعد</div>
+ <h2>${new Date(csel+'T12:00').toLocaleDateString(loc,{weekday:'long',day:'numeric',month:'long'})}</h2>
+ <div class="grid"><div class="stat">🕌<b>${pf(csel)}/5</b><span class="sub">صلوات</span></div><div class="stat">📖<b>${wf(csel)}</b><span class="sub">صفحات الورد</span></div><div class="stat">🍅<b>${ff(csel)}</b><span class="sub">دقيقة تركيز</span></div><div class="stat">💭<b>${nn.length}</b><span class="sub">ملاحظات</span></div></div>
+ <h2>المواعيد</h2>${ev.map(x=>`<div class="card row"><span data-u>${esc(x.t)}</span><button class="x" data-ce="${x.i}">🗑️</button></div>`).join('')}<button class="g" data-ca="1" style="width:100%">＋ ضيف موعد</button>`)}
+
+/* ---------- install (PWA) ---------- */
+let dip=null;
+addEventListener('beforeinstallprompt',e=>{e.preventDefault();dip=e});
+addEventListener('appinstalled',()=>{dip=null;const i=$('[data-m=in]');if(i)i.style.display='none'});
+if(matchMedia('(display-mode: standalone)').matches||navigator.standalone){const i=$('[data-m=in]');if(i)i.style.display='none'}
+if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
+function install(){if(dip){dip.prompt();dip.userChoice.finally(()=>{dip=null});return}
+ ovShow(`<h1>⬇️ تثبيت التطبيق</h1><div class="card"><b>📱 أندرويد (Chrome)</b><div class="sub" style="margin-top:6px">اضغط ⋮ فوق في المتصفح، وبعدين "تثبيت التطبيق" أو "Add to Home screen".</div></div><div class="card"><b>🍎 آيفون (Safari)</b><div class="sub" style="margin-top:6px">اضغط زرار المشاركة ⬆️ وبعدين "Add to Home Screen".</div></div><div class="card"><b>💻 كمبيوتر (Chrome / Edge)</b><div class="sub" style="margin-top:6px">اضغط أيقونة التثبيت في شريط العنوان، أو قايمة المتصفح ← "Install".</div></div><div class="msg">لازم تفتح الموقع من الرابط على الإنترنت (مش من الملف مباشرة).</div>`)}
+
+/* ---------- Firebase (املا الإعدادات من console.firebase.google.com) ---------- */
+(()=>{const m=location.hash.match(/#fb=([^&]+)/);if(m){try{localStorage.setItem('fbcfg',atob(decodeURIComponent(m[1])));history.replaceState(null,'',location.pathname+location.search)}catch(e){}}})();
+const FB=Object.assign({apiKey:"",authDomain:"",projectId:"",appId:""},(()=>{try{return JSON.parse(localStorage.getItem('fbcfg')||'{}')}catch(e){return{}}})());
+if(!FB.authDomain&&FB.projectId)FB.authDomain=FB.projectId+'.firebaseapp.com';
+let fa=null,fd=null,usr=null,unsub=null;
+const uni=(a,b,k)=>[...new Map([...(a||[]),...(b||[])].map(x=>[x[k],x])).values()];
+function applyCloud(c,first){const L={notes:S.notes,folders:S.folders,goals:S.goals,pomo:S.pomo,ev:S.ev};S=Object.assign(S,c);
+ if(first){S.notes=uni(c.notes,L.notes,'d').sort((a,b)=>b.d-a.d);S.folders=uni(c.folders,L.folders,'i');S.goals=uni(c.goals,L.goals,'i');S.pomo=uni(c.pomo,L.pomo,'d');S.ev=uni(c.ev,L.ev,'i')}
+ if(S.loc){LAT=S.loc[0];LON=S.loc[1]}try{localStorage.setItem('life1',JSON.stringify(S))}catch(e){}}
+if(FB.apiKey&&window.firebase){firebase.initializeApp(FB);fa=firebase.auth();fd=firebase.firestore();
+ fa.onAuthStateChanged(async u=>{usr=u;ref=null;acct='';if(unsub){unsub();unsub=null}
+  if(u){try{const r=fd.collection('users').doc(u.uid),sn=await r.get();
+    if(S.uid&&S.uid!==u.uid)Object.assign(S,{folders:[],pomo:[],pray:{},wird:{goal:5,days:{}},health:{},goals:[],notes:[],ev:[]});
+    if(sn.exists)applyCloud(JSON.parse(JSON.stringify(sn.data())),!S.uid);
+    S.uid=u.uid;ref=r;acct='☁️ متزامن — '+(u.displayName||u.email);save();
+    unsub=r.onSnapshot(s2=>{if(!s2.exists||s2.metadata.hasPendingWrites)return;const c=JSON.parse(JSON.stringify(s2.data()));if(stab(c)===lastPush)return;applyCloud(c,false);applyTheme();renderDeen();renderHealth();renderGrowth();renderIdeas();tr()})}catch(e){}}
+  applyTheme();applyLang()})}
+
+/* ---------- backup, restore, global search, weekly review ---------- */
+let toastT=0;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),3200)}
+function exportBackup(){
+  const payload={app:'حياتي',version:1,exportedAt:new Date().toISOString(),data:S};
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download='hayati-backup-'+day()+'.json';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+  toast('اتعملت نسخة احتياطية من بياناتك على الجهاز. احتفظ بالملف في مكان آمن.');
+}
+function importBackup(file){const r=new FileReader();r.onload=async()=>{try{const x=JSON.parse(r.result),data=x.data||x;if(!data||typeof data!=='object'||!Array.isArray(data.notes)||!Array.isArray(data.goals))throw Error('bad');if(!await sure('استرجاع النسخة هيستبدل البيانات الحالية على هذا الجهاز. متأكد؟'))return;S=Object.assign(S,data);save();applyTheme();applyLang();toast('تم استرجاع النسخة الاحتياطية.')}catch(e){toast('الملف مش نسخة احتياطية صحيحة من تطبيق حياتي.')}};r.readAsText(file)}
+function globalSearch(){ovShow(`<h1>⌕ بحث شامل</h1><p class="sub">ابحث في الملاحظات والمجلدات والأهداف والكورسات.</p><input id="globalQ" placeholder="اكتب كلمة للبحث…"><div id="globalResults" style="margin-top:14px"></div>`);
+ const qi=$('#globalQ'),run=()=>{const term=qi.value.trim().toLowerCase(),
+  items=[...(S.notes||[]).map(x=>({k:'n',id:x.d,type:'📝 ملاحظة',title:x.h||'',body:x.t||''})),...(S.goals||[]).map(x=>({k:'g',id:x.i,type:'🌱 هدف',title:x.n||'',body:''})),...(S.folders||[]).map(x=>({k:'f',id:x.i,type:'📁 مجلد',title:x.n||'',body:''})),...(S.ev||[]).map(x=>({k:'e',id:x.d,type:'📅 موعد',title:x.t||'',body:x.d}))].filter(x=>term&&(x.title+' '+x.body).toLowerCase().includes(term));
+  $('#globalResults').innerHTML=term?(items.length?items.slice(0,40).map(x=>`<div class="note" data-gs="${x.k}:${x.id}"><small>${x.type}</small>${x.title?`<b class="nt" data-u>${esc(x.title)}</b>`:'<b class="nt">ملاحظة بدون عنوان</b>'}${x.body&&x.k=='n'?`<div class="pv" data-u>${esc(x.body.slice(0,180))}</div>`:''}</div>`).join(''):'<div class="msg">مفيش نتائج مطابقة.</div>'):'<div class="msg">ابدأ الكتابة لعرض النتائج.</div>'};
+ qi.addEventListener('input',run);run();qi.focus()}
+function weeklyReview(){const now=Date.now(),week=now-7*86400000,notes=(S.notes||[]).filter(n=>(n.e||n.d||0)>=week).length,focus=(S.pomo||[]).filter(p=>(p.d||0)>=week).reduce((a,p)=>a+(+p.m||0),0),tasks=(S.goals||[]).filter(g=>g.p>=100).length,prays=Object.entries(S.pray||{}).filter(([d])=>Date.parse(d)>=week).reduce((a,[,v])=>a+Object.values(v||{}).filter(Boolean).length,0),rv=S.reviews||[];
+ ovShow(`<h1>مراجعة الأسبوع 📈</h1><p class="sub">ملخص آخر ٧ أيام بناءً على البيانات المحفوظة في التطبيق.</p><div class="grid"><div class="stat"><span class="sub">جلسات التركيز</span><b>${Math.floor(focus/60)}h ${focus%60}m</b></div><div class="stat"><span class="sub">ملاحظات أُضيفت/عُدّلت</span><b>${notes}</b></div><div class="stat"><span class="sub">صلوات معلّمة كمكتملة</span><b>${prays}</b></div><div class="stat"><span class="sub">الأهداف المكتملة المسجلة</span><b>${tasks}</b></div></div><h2>اسأل نفسك</h2><div class="card">إيه أفضل حاجة عملتها الأسبوع ده؟<textarea id="reviewGood" rows="2" placeholder="اكتب إنجازك هنا…" style="margin-top:8px"></textarea></div><div class="card">إيه أهم حاجة هتركز عليها الأسبوع الجاي؟<textarea id="reviewNext" rows="2" placeholder="اكتب أولوية واحدة…" style="margin-top:8px"></textarea></div><button id="saveReview" style="width:100%">حفظ مراجعة الأسبوع</button>${rv.length?`<h2>المراجعات السابقة</h2>${rv.map((r,i)=>`<div class="note"><small>${r.date}</small><div data-u>🏆 ${esc(r.good||'—')}</div><div data-u>🎯 ${esc(r.next||'—')}</div><div class="na"><button class="g" data-rd="${i}">🗑️ حذف</button></div></div>`).join('')}`:''}`);
+ $('#saveReview').onclick=()=>{const g=$('#reviewGood').value.trim(),n=$('#reviewNext').value.trim();if(!g&&!n)return;S.reviews=S.reviews||[];S.reviews.unshift({date:day(),good:g,next:n});save();snd('ok');toast('اتحفظت مراجعة الأسبوع على جهازك.');weeklyReview()}}
+$('#importFile').onchange=e=>{if(e.target.files[0])importBackup(e.target.files[0]);e.target.value=''};
+
+/* ---------- init ---------- */
+applyTheme();applyLang();
+let st=0;try{st=+localStorage.getItem('lifetab')||0}catch(e){}go(st);
+if(!S.loc)locate();
+</script>
+</body>
+</html>
